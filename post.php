@@ -19,7 +19,7 @@ if($_POST){
 	$picks['west'] = [];
 	$picks['east'] = [];
 	$i = 1;
-	while($i < 9){
+	while($i < 3){
 		foreach($picks as $division => $val){
 			$picks[$division][$i] = [];
 			$picks[$division][$i]['team'] = $_POST[$division . $i];
@@ -28,10 +28,10 @@ if($_POST){
 		$i++;
 	}
 
-	file_put_contents($directory . $filename . '.txt', serialize($picks));
+	file_put_contents($directory . $filename . '.json', json_encode($picks, JSON_PRETTY_PRINT));
 
-	if(file_exists($directory . 'entries.txt')){
-		$entries = unserialize(file_get_contents($directory . 'entries.txt'));
+	if(file_exists($directory . 'entries.json')){
+		$entries = json_decode(file_get_contents($directory . 'entries.json'), true);
 	} else {
 		$entries = [];
 	}
@@ -43,11 +43,11 @@ if($_POST){
 		$entries[$name][] = $filename;
 	}
 
-	file_put_contents($directory . 'entries.txt', serialize($entries));
+	file_put_contents($directory . 'entries.json', json_encode($entries, JSON_PRETTY_PRINT));
 
 	$picks = [];
 	foreach($entries as $user => $files){
-		$picks[$user] = unserialize(file_get_contents($directory . end($files) . '.txt'));
+		$picks[$user] = json_decode(file_get_contents($directory . end($files) . '.json'), true);
 	}
 
 	header('Location: index.php');
@@ -55,14 +55,14 @@ if($_POST){
 } else {
 	$directory = 'data/';
 
-	if(file_exists($directory . 'entries.txt')){
-		$entries = unserialize(file_get_contents($directory . 'entries.txt'));
+	if(file_exists($directory . 'entries.json')){
+		$entries = json_decode(file_get_contents($directory . 'entries.json'), true);
 	} else {
 		$entries = [];
 	}
 	$picks = [];
 	foreach($entries as $user => $files){
-		$picks[$user] = unserialize(file_get_contents($directory . end($files) . '.txt'));
+		$picks[$user] = json_decode(file_get_contents($directory . end($files) . '.json'), true);
 	}
 
 	echo '<pre>';

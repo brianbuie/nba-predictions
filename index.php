@@ -39,14 +39,14 @@ $teams['east'] = [
 
 $directory = 'data/';
 
-if(file_exists($directory . 'entries.txt')){
-	$entries = unserialize(file_get_contents($directory . 'entries.txt'));
+if(file_exists($directory . 'entries.json')){
+	$entries = json_decode(file_get_contents($directory . 'entries.json'), true);
 } else {
 	$entries = [];
 }
 $picks = [];
 foreach($entries as $user => $files){
-	$picks[$user] = unserialize(file_get_contents($directory . end($files) . '.txt'));
+	$picks[$user] = json_decode(file_get_contents($directory . end($files) . '.json'), true);
 }
 
 ?>
@@ -89,7 +89,7 @@ foreach($entries as $user => $files){
 
 				<div class="form-group col-lg-6">
 					<h2><?php echo $division; ?></h2>
-					<?php $i = 1; while($i < 9){ ?>
+					<?php $i = 1; while($i < 3){ ?>
 						<div class="form-group row">
 							<div class="form-group col-xs-8">
 								<select class="form-control" id="<?php echo $division . $i; ?>" name="<?php echo $division . $i; ?>" required>
