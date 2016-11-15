@@ -1,11 +1,11 @@
 <?php
-ini_set('display_startup_errors',1);
-ini_set('display_errors',1);
-error_reporting(-1);
+// ini_set('display_startup_errors',1);
+// ini_set('display_errors',1);
+// error_reporting(-1);
 
 // header("Content-Type: 'application/json'");
-header("Access-Control-Allow-Origin: http://localhost");
-header("Access-Control-Allow-Headers: Content-Type");
+// header("Access-Control-Allow-Origin: http://localhost");
+// header("Access-Control-Allow-Headers: Content-Type");
 
 
 if($_POST){
@@ -19,7 +19,7 @@ if($_POST){
 	$picks['west'] = [];
 	$picks['east'] = [];
 	$i = 1;
-	while($i < 3){
+	while($i < 9){
 		foreach($picks as $division => $val){
 			$picks[$division][$i] = [];
 			$picks[$division][$i]['team'] = $_POST[$division . $i];

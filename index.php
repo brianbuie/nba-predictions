@@ -63,33 +63,34 @@ foreach($entries as $user => $files){
 </head>
 
 <body>
-<h1>NBA standings predictions</h1>
+<h1>NBA Standings Predictions</h1>
 
 <div class="container">
-
 	<?php if($entries){ foreach( $picks as $user => $divisions ){ ?>
+	<div class="alert alert-info">
 		<h4><?php echo $user; ?></h4>
 		<div class="row">
 			<?php foreach ($divisions as $division => $standings){ ?>
 			<div class="col-md-6">
 				<h5><?php echo $division; ?></h5>
 				<?php foreach ($standings as $i => $team) {
-					echo '<div class="row">';
-					echo '<div class="col-xs-8">' . $i . '. <b>' . $team['team'] . '</b></div>';
-					echo '<div class="col-xs-4"><i>' . $team['wins'] . '-' . (82 - intval($team['wins'])) . '</i></div>';
+					echo '<div class="row border-bottom">';
+					echo '<div class="col-xs-9">' . $i . '. <b>' . $team['team'] . '</b></div>';
+					echo '<div class="col-xs-3"><i>' . $team['wins'] . '-' . (82 - intval($team['wins'])) . '</i></div>';
 					echo '</div>';
 				} ?>
 			</div>
 			<?php } ?>
 		</div>
+	</div>
 	<?php } } ?>
 	<form action="post.php" method="post">
+		<h2 class="center">Submit Your Prediction</h2>
 		<div class="form-group row">
 			<?php foreach($teams as $division => $teams){ ?>
-
-				<div class="form-group col-lg-6">
-					<h2><?php echo $division; ?></h2>
-					<?php $i = 1; while($i < 3){ ?>
+				<div class="form-group col-lg-6 division">
+					<h5><?php echo $division; ?></h5>
+					<?php $i = 1; while($i < 9){ ?>
 						<div class="form-group row">
 							<div class="form-group col-xs-8">
 								<select class="form-control" id="<?php echo $division . $i; ?>" name="<?php echo $division . $i; ?>" required>
@@ -116,6 +117,11 @@ foreach($entries as $user => $files){
 			<button type="submit" class="btn btn-primary">Submit</button>
 		</div>
 	</form>
+<div class="row">
+	<div class="col-xs-12">
+		<p>To change your prediction, submit a new one and use the same name. Don't be a dick and change other people's picks. If you fuck up, let me know and I can revert it back.</p>
+		<p>The form will be up for a week or so, then I gotta take it down, since I completely neglected all security measures with this project.</p>
+	</div>
 </div>
 
 
