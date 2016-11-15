@@ -1,0 +1,19 @@
+body{
+	padding-bottom: 10rem;
+}
+h1{
+	text-align: center;
+}
+h1, h2, h3, h4, h5{
+	margin-top: 1em;
+}
+form{
+	margin-top: 4rem;
+}
+.form-group{
+	margin-bottom: 0.2rem;
+}
+
+input, select, button{
+	width: 100% !important;
+}
