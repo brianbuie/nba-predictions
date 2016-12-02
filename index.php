@@ -83,10 +83,10 @@ function scoreColor($score){
 <div class="container">
 
 	<div class="alert alert-warning">
-		<h4 style="text-align: center;">Current Standings</h4>
+		<h4 class="center">Current Standings</h4>
 		<div class="row">
 			<div class="col-md-6">
-				<h5>West</h5>
+				<h5 class="border-bottom center" style="padding-bottom: 20px;">West</h5>
 				<?php foreach ($westStandings as $i => $team) {
 					echo '<div class="row border-bottom">';
 					echo '<div class="col-xs-9">' . ($i + 1) . '. <b>' . $team['NAME'] . '</b></div>';
@@ -95,7 +95,7 @@ function scoreColor($score){
 				} ?>
 			</div>
 			<div class="col-md-6">
-				<h5>East</h5>
+				<h5 class="border-bottom center" style="padding-bottom: 20px;">East</h5>
 				<?php foreach ($eastStandings as $i => $team) {
 					echo '<div class="row border-bottom">';
 					echo '<div class="col-xs-9">' . ($i + 1) . '. <b>' . $team['NAME'] . '</b></div>';
@@ -115,10 +115,14 @@ function scoreColor($score){
 				<div class="row">
 					<?php foreach ($divisions as $division => $standings){ ?>
 					<div class="col-md-6">
-						<h5><?php echo $division; ?></h5>
+						<h5 class="center border-bottom" style="padding-bottom: 20px;"><?php echo $division; ?></h5>
 						<?php foreach ($standings as $i => $team) {
 							echo '<div class="row border-bottom">';
-							echo '<div class="col-xs-7">' . $i . '. <b>' . $team['team'] . '</b></div>';
+							if($team['correct']){
+								echo '<div class="col-xs-7">' . $i . '. <b>' . $team['team'] . '</b></div>';
+							} else {
+								echo '<div class="col-xs-7" style="opacity: 0.5;">' . $i . '. <b>' . $team['team'] . '</b></div>';
+							}
 							echo '<div class="col-xs-3"><i>' . $team['wins'] . '-' . (82 - intval($team['wins'])) . '</i></div>';
 							echo '<div class="col-xs-2">' . scoreColor($team['score']) . '</div>';
 							echo '</div>';
@@ -135,12 +139,12 @@ function scoreColor($score){
 	} ?>
 
 	<div class="row">
-		<div class="col-xs-12" style="text-align:center;">
+		<div class="col-xs-12" style="text-align:center; margin-top: 40px;">
 			<h1>Scoring</h1>
 			<p><span style="color: green;">+50</span> points for correct placement</p>
-			<p><span style="color: red;">-10</span> points for every place away from predicted placement.</p>
+			<p><span style="color: red;">-10</span> points for every place away from predicted placement</p>
 			<p><span style="color: green;">+100</span> points for guessing correct amount of wins</p>
-			<p><span style="color: red;">-1</span> point for every win away from predicted amount of wins.</p>
+			<p><span style="color: red;">-1</span> point for every win away from predicted amount of wins</p>
 
 		</div>
 	</div>

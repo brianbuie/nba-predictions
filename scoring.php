@@ -17,6 +17,15 @@ function scorePick($rank, $details, $teamStats){
     return $score;
 }
 
+function isCorrectRank($rank, $details, $teamStats){
+    $actual = $teamStats[$details['team']];
+    if($actual['RANK'] == $rank){
+        return true;
+    }else{
+        return false;
+    }
+}
+
 $totalScores = [];
 
 foreach($picks as $user => $_picks){
@@ -26,6 +35,7 @@ foreach($picks as $user => $_picks){
         foreach($standings as $rank => $details){
             $score = scorePick($rank, $details, $teamStats);
             $picks[$user][$conference][$rank]['score'] = $score;
+            $picks[$user][$conference][$rank]['correct'] = isCorrectRank($rank, $details, $teamStats);
             $total_score += $score;
         }
     }
