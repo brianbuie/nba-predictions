@@ -1,0 +1,70 @@
+{
+    "west": {
+        "1": {
+            "team": "Golden State Warriors",
+            "wins": "65"
+        },
+        "2": {
+            "team": "Los Angeles Clippers",
+            "wins": "59"
+        },
+        "3": {
+            "team": "San Antonio Spurs",
+            "wins": "58"
+        },
+        "4": {
+            "team": "Oklahoma City Thunder",
+            "wins": "47"
+        },
+        "5": {
+            "team": "Portland Trail Blazers",
+            "wins": "45"
+        },
+        "6": {
+            "team": "Houston Rockets",
+            "wins": "43"
+        },
+        "7": {
+            "team": "Utah Jazz",
+            "wins": "41"
+        },
+        "8": {
+            "team": "Los Angeles Lakers",
+            "wins": "40"
+        }
+    },
+    "east": {
+        "1": {
+            "team": "Cleveland Cavaliers",
+            "wins": "60"
+        },
+        "2": {
+            "team": "Toronto Raptors",
+            "wins": "58"
+        },
+        "3": {
+            "team": "Atlanta Hawks",
+            "wins": "57"
+        },
+        "4": {
+            "team": "Charlotte Hornets",
+            "wins": "49"
+        },
+        "5": {
+            "team": "Detroit Pistons",
+            "wins": "46"
+        },
+        "6": {
+            "team": "Milwaukee Bucks",
+            "wins": "45"
+        },
+        "7": {
+            "team": "New York Knicks",
+            "wins": "40"
+        },
+        "8": {
+            "team": "Philidelphia 76ers",
+            "wins": "38"
+        }
+    }
+}
