@@ -1,5 +1,7 @@
 <?php
 
+include('api.php');
+
 $OPEN_SUBMISSIONS = false;
 
 $teams = [];
@@ -51,6 +53,17 @@ foreach($entries as $user => $files){
 	$picks[$user] = json_decode(file_get_contents($directory . end($files) . '.json'), true);
 }
 
+include('scoring.php');
+
+function scoreColor($score){
+	if($score >= 1){
+		return '<span style="color: green">+' . $score . '</span>';
+	} else {
+		return '<span style="color: red">' . $score . '</span>';
+	}
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -68,28 +81,69 @@ foreach($entries as $user => $files){
 <h1>NBA Standings Predictions</h1>
 
 <div class="container">
-	<?php if($entries){ foreach( $picks as $user => $divisions ){ ?>
-	<div class="alert alert-info">
-		<h4><?php echo $user; ?></h4>
+
+	<div class="alert alert-warning">
+		<h4 style="text-align: center;">Current Standings</h4>
 		<div class="row">
-			<?php foreach ($divisions as $division => $standings){ ?>
 			<div class="col-md-6">
-				<h5><?php echo $division; ?></h5>
-				<?php foreach ($standings as $i => $team) {
+				<h5>West</h5>
+				<?php foreach ($westStandings as $i => $team) {
 					echo '<div class="row border-bottom">';
-					echo '<div class="col-xs-9">' . $i . '. <b>' . $team['team'] . '</b></div>';
-					echo '<div class="col-xs-3"><i>' . $team['wins'] . '-' . (82 - intval($team['wins'])) . '</i></div>';
+					echo '<div class="col-xs-9">' . ($i + 1) . '. <b>' . $team['NAME'] . '</b></div>';
+					echo '<div class="col-xs-3"><i>' . $team['W'] . '-' . $team['L'] . '</i></div>';
 					echo '</div>';
 				} ?>
 			</div>
-			<?php } ?>
+			<div class="col-md-6">
+				<h5>East</h5>
+				<?php foreach ($eastStandings as $i => $team) {
+					echo '<div class="row border-bottom">';
+					echo '<div class="col-xs-9">' . ($i + 1) . '. <b>' . $team['NAME'] . '</b></div>';
+					echo '<div class="col-xs-3"><i>' . $team['W'] . '-' . $team['L'] . '</i></div>';
+					echo '</div>';
+				} ?>
+			</div>
 		</div>
 	</div>
-	<?php } } ?>
+
+	<?php if($entries){
+		foreach( $totalScores as $user => $points ){
+			$divisions = $picks[$user]; ?>
+			<div class="alert alert-info">
+				<h4 style="text-align:center;"><?php echo $user;?></h4>
+				<h5 style="text-align:center;"><?php echo $points . ' points';?></h5>
+				<div class="row">
+					<?php foreach ($divisions as $division => $standings){ ?>
+					<div class="col-md-6">
+						<h5><?php echo $division; ?></h5>
+						<?php foreach ($standings as $i => $team) {
+							echo '<div class="row border-bottom">';
+							echo '<div class="col-xs-7">' . $i . '. <b>' . $team['team'] . '</b></div>';
+							echo '<div class="col-xs-3"><i>' . $team['wins'] . '-' . (82 - intval($team['wins'])) . '</i></div>';
+							echo '<div class="col-xs-2">' . scoreColor($team['score']) . '</div>';
+							echo '</div>';
+						} ?>
+					</div>
+					<?php } ?>
+				</div>
+			</div>
+		<?php }
+	} ?>
 
 	<?php if($OPEN_SUBMISSIONS){
 		include('form.php');
 	} ?>
+
+	<div class="row">
+		<div class="col-xs-12" style="text-align:center;">
+			<h1>Scoring</h1>
+			<p><span style="color: green;">+50</span> points for correct placement</p>
+			<p><span style="color: red;">-10</span> points for every place away from predicted placement.</p>
+			<p><span style="color: green;">+100</span> points for guessing correct amount of wins</p>
+			<p><span style="color: red;">-1</span> point for every win away from predicted amount of wins.</p>
+
+		</div>
+	</div>
 
 </div>
 
