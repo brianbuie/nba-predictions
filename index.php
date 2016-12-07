@@ -52,18 +52,6 @@ $picks = [];
 foreach($entries as $user => $files){
 	$picks[$user] = json_decode(file_get_contents($directory . end($files) . '.json'), true);
 }
-
-include('scoring.php');
-
-function scoreColor($score){
-	if($score >= 1){
-		return '<span style="color: #43ba70;">+' . $score . '</span>';
-	} else {
-		return '<span style="color: red">' . $score . '</span>';
-	}
-}
-
-
 ?>
 
 <!DOCTYPE html>
@@ -74,13 +62,18 @@ function scoreColor($score){
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>NBA Predictions</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
-	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<link rel="stylesheet" href="css/style2.css" type="text/css">
 </head>
 
 <body>
 <h1>NBA Standings Predictions</h1>
 
+<p class="center"><a href="?debug">Full Scoring Breakdown</a></p>
+
 <div class="container">
+
+	<?php include('scoring.php'); ?>
+
 	<h4 class="center">Current Standings</h4>
 	<div class="row">
 		<div class="col-lg-6">
@@ -100,7 +93,7 @@ function scoreColor($score){
 							echo '<td class="center">' . ($i + 1) . '</td>';
 							echo '<td>' . $team['NAME'] . '</td>';
 							echo '<td class="center">' . $team['W'] . '-' . $team['L'] . '</td>';
-							echo '<td class="center"><i>' . $team['W_PCT'] . '</i></td>';
+							echo '<td class="center"><i>' . $team['W_PCT'] . '%</i></td>';
 							echo '</tr>';
 						} ?>
 					</tbody>
@@ -124,7 +117,7 @@ function scoreColor($score){
 							echo '<td class="center">' . ($i + 1) . '</td>';
 							echo '<td>' . $team['NAME'] . '</td>';
 							echo '<td class="center">' . $team['W'] . '-' . $team['L'] . '</td>';
-							echo '<td class="center"><i>' . $team['W_PCT'] . '</i></td>';
+							echo '<td class="center"><i>' . $team['W_PCT'] . '%</i></td>';
 							echo '</tr>';
 						} ?>
 					</tbody>
@@ -138,7 +131,7 @@ function scoreColor($score){
 			$divisions = $picks[$user]; ?>
 			<div class="user-container">
 				<h5 class="center"><?php echo $user;?></h5>
-				<h3 class="center"><?php echo $points . ' points';?></h3>
+				<h3 class="center points"><?php echo $points . ' points';?></h3>
 				<div class="row">
 					<?php foreach ($divisions as $division => $standings){ ?>
 						<div class="col-lg-6">
@@ -148,23 +141,25 @@ function scoreColor($score){
 										<tr>
 											<th class="center"> Rank </th>
 											<th> <?php echo $division ?> </th>
-											<th class="center"> Record </th>
-											<th class="center"> Win % </th>
+											<th colspan="2" class="center"> Predicted </th>
+											<th colspan="2" class="center"> Current </th>
 											<th class="center"> Points </th>
 										</tr>
 									</thead>
 									<tbody>
 										<?php foreach ($standings as $i => $team) {
 											if($team['correct']){
-												echo '<tr class="bg-success-dark">';
+												echo '<tr class="correct">';
 											} else {
-												echo '<tr>';
+												echo '<tr class="incorrect">';
 											}
 											echo '<td class="center">' . $i . '</td>';
-											echo '<td><small>' . $team['team'] . '</small></td>';
-											echo '<td class="center">' . $team['wins'] . '-' . (82 - intval($team['wins'])) . '</td>';
-											echo '<td class="center"><i>' . '%</i></td>';
-											echo '<td class="center"><strong>' . scoreColor($team['score']) . '</strong></td>';
+											echo '<td>' . $team['short'] . '</td>';
+											echo '<td class="center border-left">' . $team['wins'] . '-' . (82 - intval($team['wins'])) . '</td>';
+											echo '<td class="center"><i>' . $team['W_PCT'] . '</i></td>';
+											echo '<td class="center border-left">' . $team['REAL_W'] . '-' . $team['REAL_L'] . '</td>';
+											echo '<td class="center"><i>' . $team['REAL_W_PCT'] . '</i></td>';
+											echo '<td class="center border-left"><strong class="points">' . $team['score'] . '</strong></td>';
 											echo '</tr>';
 										} ?>
 									</tbody>
@@ -184,10 +179,10 @@ function scoreColor($score){
 	<div class="row">
 		<div class="col-xs-12" style="text-align:center; margin-top: 40px;">
 			<h1>Scoring</h1>
-			<p><span style="color: green;">+50</span> points for correct placement</p>
-			<p><span style="color: red;">-10</span> points for every place away from predicted placement</p>
-			<p><span style="color: green;">+100</span> points for guessing correct amount of wins</p>
-			<p><span style="color: red;">-1</span> point for every win away from predicted amount of wins</p>
+			<p>Scoring is based on % correct compared to actual standings and win percentage</p>
+			<p>Position predictions are out of <span class="points">100 points</span>, with a <span class="points">50 point</span> bonus for being 100% correct</p>
+			<p>Wins are now ranked by comparing win percentage, out of <span class="points">50 points</span>, with a <span class="points">100 point</span> bonus for being 100% correct</p>
+			<p>You can view the scoring in more detail <a href="?debug">here</a></p>
 
 		</div>
 	</div>
