@@ -57,7 +57,7 @@ include('scoring.php');
 
 function scoreColor($score){
 	if($score >= 1){
-		return '<span style="color: green">+' . $score . '</span>';
+		return '<span style="color: #43ba70;">+' . $score . '</span>';
 	} else {
 		return '<span style="color: red">' . $score . '</span>';
 	}
@@ -81,58 +81,101 @@ function scoreColor($score){
 <h1>NBA Standings Predictions</h1>
 
 <div class="container">
-
-	<div class="alert alert-warning">
-		<h4 class="center">Current Standings</h4>
-		<div class="row">
-			<div class="col-md-6">
-				<h5 class="border-bottom center" style="padding-bottom: 20px;">West</h5>
-				<?php foreach ($westStandings as $i => $team) {
-					echo '<div class="row border-bottom">';
-					echo '<div class="col-xs-9">' . ($i + 1) . '. <b>' . $team['NAME'] . '</b></div>';
-					echo '<div class="col-xs-3"><i>' . $team['W'] . '-' . $team['L'] . '</i></div>';
-					echo '</div>';
-				} ?>
+	<h4 class="center">Current Standings</h4>
+	<div class="row">
+		<div class="col-lg-6">
+			<div class="table-responsive">
+				<table class="table table-sm table-inverse">
+					<thead>
+						<tr class="bg-primary">
+							<th class="center"> Rank </th>
+							<th> Western Conference </th>
+							<th class="center"> Record </th>
+							<th class="center"> Win % </th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach ($westStandings as $i => $team) {
+							echo '<tr>';
+							echo '<td class="center">' . ($i + 1) . '</td>';
+							echo '<td>' . $team['NAME'] . '</td>';
+							echo '<td class="center">' . $team['W'] . '-' . $team['L'] . '</td>';
+							echo '<td class="center"><i>' . $team['W_PCT'] . '</i></td>';
+							echo '</tr>';
+						} ?>
+					</tbody>
+				</table>
 			</div>
-			<div class="col-md-6">
-				<h5 class="border-bottom center" style="padding-bottom: 20px;">East</h5>
-				<?php foreach ($eastStandings as $i => $team) {
-					echo '<div class="row border-bottom">';
-					echo '<div class="col-xs-9">' . ($i + 1) . '. <b>' . $team['NAME'] . '</b></div>';
-					echo '<div class="col-xs-3"><i>' . $team['W'] . '-' . $team['L'] . '</i></div>';
-					echo '</div>';
-				} ?>
+		</div>
+		<div class="col-lg-6">
+			<div class="table-responsive">
+				<table class="table table-sm table-inverse">
+					<thead>
+						<tr class="bg-primary">
+							<th class="center"> Rank </th>
+							<th> Eastern Conference </th>
+							<th class="center"> Record </th>
+							<th class="center"> Win % </th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach ($eastStandings as $i => $team) {
+							echo '<tr>';
+							echo '<td class="center">' . ($i + 1) . '</td>';
+							echo '<td>' . $team['NAME'] . '</td>';
+							echo '<td class="center">' . $team['W'] . '-' . $team['L'] . '</td>';
+							echo '<td class="center"><i>' . $team['W_PCT'] . '</i></td>';
+							echo '</tr>';
+						} ?>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
-
+	
 	<?php if($entries){
 		foreach( $totalScores as $user => $points ){
 			$divisions = $picks[$user]; ?>
-			<div class="alert alert-info">
-				<h4 style="text-align:center;"><?php echo $user;?></h4>
-				<h5 style="text-align:center;"><?php echo $points . ' points';?></h5>
+			<div class="user-container">
+				<h5 class="center"><?php echo $user;?></h5>
+				<h3 class="center"><?php echo $points . ' points';?></h3>
 				<div class="row">
 					<?php foreach ($divisions as $division => $standings){ ?>
-					<div class="col-md-6">
-						<h5 class="center border-bottom" style="padding-bottom: 20px;"><?php echo $division; ?></h5>
-						<?php foreach ($standings as $i => $team) {
-							echo '<div class="row border-bottom">';
-							if($team['correct']){
-								echo '<div class="col-xs-7">' . $i . '. <b>' . $team['team'] . '</b></div>';
-							} else {
-								echo '<div class="col-xs-7" style="opacity: 0.5;">' . $i . '. <b>' . $team['team'] . '</b></div>';
-							}
-							echo '<div class="col-xs-3"><i>' . $team['wins'] . '-' . (82 - intval($team['wins'])) . '</i></div>';
-							echo '<div class="col-xs-2">' . scoreColor($team['score']) . '</div>';
-							echo '</div>';
-						} ?>
-					</div>
-					<?php } ?>
-				</div>
-			</div>
-		<?php }
-	} ?>
+						<div class="col-lg-6">
+							<div class="table-responsive table-inverse">
+								<table class="table table-sm">
+									<thead>
+										<tr>
+											<th class="center"> Rank </th>
+											<th> <?php echo $division ?> </th>
+											<th class="center"> Record </th>
+											<th class="center"> Win % </th>
+											<th class="center"> Points </th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php foreach ($standings as $i => $team) {
+											if($team['correct']){
+												echo '<tr class="bg-success-dark">';
+											} else {
+												echo '<tr>';
+											}
+											echo '<td class="center">' . $i . '</td>';
+											echo '<td><small>' . $team['team'] . '</small></td>';
+											echo '<td class="center">' . $team['wins'] . '-' . (82 - intval($team['wins'])) . '</td>';
+											echo '<td class="center"><i>' . '%</i></td>';
+											echo '<td class="center"><strong>' . scoreColor($team['score']) . '</strong></td>';
+											echo '</tr>';
+										} ?>
+									</tbody>
+								</table>
+							</div>
+						</div> <!-- /column -->
+					<?php } // foreach division ?>
+				</div> <!-- /row -->
+			</div> <!-- /user-container -->
+		<?php } // foreach user ?>
+	<?php } // if entries ?>
 
 	<?php if($OPEN_SUBMISSIONS){
 		include('form.php');
