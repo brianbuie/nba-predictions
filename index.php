@@ -89,7 +89,11 @@ foreach($entries as $user => $files){
 					</thead>
 					<tbody>
 						<?php foreach ($westStandings as $i => $team) {
-							echo '<tr>';
+							if($i < 8){
+								echo '<tr>';
+							} else {
+								echo '<tr class="incorrect">';
+							}
 							echo '<td class="center">' . ($i + 1) . '</td>';
 							echo '<td>' . $team['NAME'] . '</td>';
 							echo '<td class="center">' . $team['W'] . '-' . $team['L'] . '</td>';
@@ -113,7 +117,11 @@ foreach($entries as $user => $files){
 					</thead>
 					<tbody>
 						<?php foreach ($eastStandings as $i => $team) {
-							echo '<tr>';
+							if($i < 8){
+								echo '<tr>';
+							} else {
+								echo '<tr class="incorrect">';
+							}
 							echo '<td class="center">' . ($i + 1) . '</td>';
 							echo '<td>' . $team['NAME'] . '</td>';
 							echo '<td class="center">' . $team['W'] . '-' . $team['L'] . '</td>';
