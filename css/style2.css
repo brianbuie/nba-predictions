@@ -1,7 +1,7 @@
+/* Basics */
 html{
 	font-size: 14px;
 }
-
 body{
 	background-color: #000;
 	color: #ddd;
@@ -13,39 +13,51 @@ h1{
 h1, h2, h3, h4, h5{
 	margin: 20px;
 }
-
 h5{
 	margin-top: 1em;
-}
-.alert{
-	margin-bottom: 1em;
 }
 .border-bottom{
 	border-bottom: 1px solid rgb(49, 112, 143);
 	margin: 0 0.5em 0.5em 0;
 }
-
 .padding-bottom{
 	padding-bottom: 2rem;
 }
 
+/* Utilities */
+.correct{
+	color: #fff;
+}
+.incorrect{
+	color: #888;
+}
+.capitalize{
+	text-transform: capitalize;
+}
+.points{
+	color: #43ba70;
+}
+.center{
+	text-align: center;
+}
+
+/* Forms */
 form{
 	margin-top: 6rem;
 }
 .form-group{
 	margin-bottom: 0.2rem;
 }
-
 input, select, button{
 	width: 100% !important;
 }
 
+/* Score Displays */
 .user-container{
 	margin-top: 40px;
 	background-color: #222;
 	padding: 10px;
 }
-
 .user-container h3{
 	margin: 30px;
 }
@@ -53,30 +65,16 @@ input, select, button{
 	margin: 10px;
 	opacity: 0.7;
 }
-
 .table-responsive{
 	margin-bottom: 15px;
 	font-size: 12px;
 }
-
+.table{
+	margin-bottom: 0;
+}
 .bg-success-dark{
 	background-color: #2c6040;
 }
-.correct{
-	color: #fff;
-}
-.incorrect{
-	color: #888;
-}
-
 .border-left{
 	border-left: 1px solid grey;
-}
-
-.points{
-	color: #43ba70;
-}
-
-.center{
-	text-align: center;
 }

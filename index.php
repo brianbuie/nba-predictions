@@ -138,7 +138,7 @@ foreach($entries as $user => $files){
 		foreach( $totalScores as $user => $points ){
 			$divisions = $picks[$user]; ?>
 			<div class="user-container">
-				<h5 class="center"><?php echo $user;?></h5>
+				<h5 class="center capitalize"><?php echo $user;?></h5>
 				<h3 class="center points"><?php echo $points . ' points';?></h3>
 				<div class="row">
 					<?php foreach ($divisions as $division => $standings){ ?>
@@ -148,7 +148,7 @@ foreach($entries as $user => $files){
 									<thead>
 										<tr>
 											<th class="center"> Rank </th>
-											<th> <?php echo $division ?> </th>
+											<th class="capitalize"> <?php echo $division ?> </th>
 											<th colspan="2" class="center"> Predicted </th>
 											<th colspan="2" class="center"> Current </th>
 											<th class="center"> Points </th>
