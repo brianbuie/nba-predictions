@@ -1,69 +1,69 @@
 {
     "west": {
         "1": {
-            "team": "Golden State Warriors",
+            "team": 1610612744,
             "wins": "65"
         },
         "2": {
-            "team": "Los Angeles Clippers",
+            "team": 1610612746,
             "wins": "59"
         },
         "3": {
-            "team": "San Antonio Spurs",
-            "wins": "58"
+            "team": 1610612759,
+            "wins": "57"
         },
         "4": {
-            "team": "Oklahoma City Thunder",
+            "team": 1610612760,
             "wins": "47"
         },
         "5": {
-            "team": "Portland Trail Blazers",
+            "team": 1610612757,
             "wins": "45"
         },
         "6": {
-            "team": "Houston Rockets",
+            "team": 1610612745,
             "wins": "43"
         },
         "7": {
-            "team": "Utah Jazz",
+            "team": 1610612762,
             "wins": "41"
         },
         "8": {
-            "team": "Los Angeles Lakers",
+            "team": 1610612747,
             "wins": "40"
         }
     },
     "east": {
         "1": {
-            "team": "Cleveland Cavaliers",
-            "wins": "60"
+            "team": 1610612739,
+            "wins": "61"
         },
         "2": {
-            "team": "Toronto Raptors",
+            "team": 1610612761,
             "wins": "58"
         },
         "3": {
-            "team": "Atlanta Hawks",
+            "team": 1610612737,
             "wins": "57"
         },
         "4": {
-            "team": "Charlotte Hornets",
+            "team": 1610612766,
             "wins": "49"
         },
         "5": {
-            "team": "Detroit Pistons",
+            "team": 1610612765,
             "wins": "46"
         },
         "6": {
-            "team": "Milwaukee Bucks",
+            "team": 1610612749,
             "wins": "45"
         },
         "7": {
-            "team": "New York Knicks",
+            "team": 1610612752,
             "wins": "40"
         },
         "8": {
-            "team": "Philidelphia 76ers",
+            "team": 1610612755,
             "wins": "38"
         }
     }

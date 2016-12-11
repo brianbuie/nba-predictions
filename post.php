@@ -7,6 +7,11 @@
 // header("Access-Control-Allow-Origin: http://localhost");
 // header("Access-Control-Allow-Headers: Content-Type");
 
+
+// THIS NO LONGER WORKS!!!
+// NEEDS TO BE REFACTORED TO INCLUDE TEAM ID'S INSTEAD OF NAMES
+
+
 $OPEN_SUBMISSIONS = false;
 
 if($_POST && $OPEN_SUBMISSIONS){

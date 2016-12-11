@@ -1,69 +1,69 @@
 {
     "west": {
         "1": {
-            "team": "Golden State Warriors",
+            "team": 1610612744,
             "wins": "64"
         },
         "2": {
-            "team": "San Antonio Spurs",
+            "team": 1610612759,
             "wins": "61"
         },
         "3": {
-            "team": "Los Angeles Clippers",
+            "team": 1610612746,
             "wins": "57"
         },
         "4": {
-            "team": "Houston Rockets",
+            "team": 1610612745,
             "wins": "51"
         },
         "5": {
-            "team": "Memphis Grizzlies",
+            "team": 1610612763,
             "wins": "49"
         },
         "6": {
-            "team": "Oklahoma City Thunder",
+            "team": 1610612760,
             "wins": "45"
         },
         "7": {
-            "team": "Portland Trail Blazers",
+            "team": 1610612757,
             "wins": "42"
         },
         "8": {
-            "team": "New Orleans Pelicans",
+            "team": 1610612740,
             "wins": "40"
         }
     },
     "east": {
         "1": {
-            "team": "Cleveland Cavaliers",
+            "team": 1610612739,
             "wins": "62"
         },
         "2": {
-            "team": "Toronto Raptors",
+            "team": 1610612761,
             "wins": "59"
         },
         "3": {
-            "team": "Atlanta Hawks",
+            "team": 1610612737,
             "wins": "53"
         },
         "4": {
-            "team": "New York Knicks",
+            "team": 1610612752,
             "wins": "51"
         },
         "5": {
-            "team": "Chicago Bulls",
+            "team": 1610612741,
             "wins": "50"
         },
         "6": {
-            "team": "Boston Celtics",
+            "team": 1610612738,
             "wins": "45"
         },
         "7": {
-            "team": "Charlotte Hornets",
+            "team": 1610612766,
             "wins": "43"
         },
         "8": {
-            "team": "Indiana Pacers",
+            "team": 1610612754,
             "wins": "41"
         }
     }

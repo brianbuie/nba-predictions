@@ -1,3 +1,5 @@
+<!-- THIS NO LONGER WORKS!!!! NEEDS TO INCLUDE TEAM ID'S INSTEAD OF NAMES! -->
+
 <form action="post.php" method="post">
     <h2 class="center">Submit Your Prediction</h2>
     <div class="form-group row">
