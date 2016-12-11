@@ -3,33 +3,31 @@
 include('classes/api.class.php');
 include('classes/user.class.php');
 include('classes/game.class.php');
+include('classes/difference.class.php');
 
 // instantiation
-$users = [];
-if(file_exists('data/entries.json')){
-	$entries = json_decode(file_get_contents('data/entries.json'), true);
-} else {
-	$entries = [];
-}
-foreach($entries as $user => $files){
-	$picks = json_decode(file_get_contents('data/' . end($files) . '.json'), true);
-	$users[$user] = new User($user, $picks);
-}
+
 
 if(isset($_GET['date'])){
 	$date = new DateTime($_GET['date']);
-	
 } else {
 	$date = new DateTime();
 }
+$day_before = new DateTime($date->format('Y-m-d'));
+$day_before->modify('-2 days');
+$game = new Difference($date, $day_before);
 
-$today = new Game($date, $users);
+$today = $game->get_current_game();
 
 // echo '<pre>';
-// var_dump($today);
+// var_dump($game->current->current);
+// var_dump($game->compare->current);
 
-// View
-include('views/head.php'); 
+// View helpers
+include('views/helpers/display_difference.php');
+// Views
+include('views/head.php');
+include('views/scoreboard.php');
 include('views/current-standings.php');
 foreach( $today->users as $user ){
 	include('views/user-table.php');

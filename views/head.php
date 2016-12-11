@@ -10,5 +10,5 @@
 	<link rel="stylesheet" href="css/style.css?<?php echo rand(1, 1234423); ?>" type="text/css">
 </head>
 <body>
-<h1>NBA Standings Predictions</h1>
+<h1 class="center spaced-out">NBA Standings Predictions</h1>
 <div class="container">

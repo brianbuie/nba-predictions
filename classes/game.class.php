@@ -11,7 +11,16 @@ class Game {
 	protected $w_pct_points = 50;
 	protected $w_pct_bonus = 100;
 
-	function __construct($date, $users){
+	function __construct($date){
+		if(file_exists('data/entries.json')){
+			$entries = json_decode(file_get_contents('data/entries.json'), true);
+		} else {
+			$entries = [];
+		}
+		foreach($entries as $user => $files){
+			$picks = json_decode(file_get_contents('data/' . end($files) . '.json'), true);
+			$users[$user] = new User($user, $picks);
+		}
 		$this->current = new Api($date);
 		foreach($users as $user){
 			$this->total_score($user);
@@ -101,8 +110,9 @@ class Game {
 			$map[$key] = $user->score;
 		}
 		arsort($map);
+		$new_users = [];
 		foreach($map as $key => $whatever){
-			$new_users[$key] = $users[$key];
+			array_push($new_users, $users[$key]);
 		}
 		return $new_users;
 	}

@@ -1,6 +1,6 @@
-<div class="user-container">
+<div class="user-container spaced-out">
 	<h5 class="center capitalize"><?php echo $user->name;?></h5>
-	<h3 class="center points"><?php echo $user->score . ' points';?></h3>
+	<h3 class="center positive spaced-out"><?php echo $user->score . ' points';?></h3>
 	<div class="row">
 		<?php foreach ($user->picks as $division => $standings){ ?>
 			<div class="col-lg-6">
@@ -22,13 +22,27 @@
 								<?php } else { ?>
 									<tr class="incorrect">
 								<?php } ?>
-								<td class="center"><?php echo $i; ?></td>
-								<td><?php echo $today->team_current($team['team'], 'TEAM'); ?></td>
-								<td class="center border-left"><?php echo $team['wins'] . '-' . (82 - intval($team['wins'])); ?></td>
-								<td class="center"><i><?php echo $team['w_pct']['predicted']; ?></i></td>
-								<td class="center border-left"><?php echo $today->team_current($team['team'], 'W') . '-' . $today->team_current($team['team'], 'L'); ?></td>
-								<td class="center"><i><?php echo $today->team_current($team['team'], 'W_PCT'); ?></i></td>
-								<td class="center border-left"><strong class="points"><?php echo $team['score']; ?></strong></td>
+									<td class="center">
+										<?php echo $i; ?>
+									</td>
+									<td>
+										<?php echo $today->team_current($team['team'], 'TEAM'); ?>
+									</td>
+									<td class="center border-left">
+										<?php echo $team['wins'] . '-' . (82 - intval($team['wins'])); ?>
+									</td>
+									<td class="center">
+										<i><?php echo $team['w_pct']['predicted']; ?></i>
+									</td>
+									<td class="center border-left">
+										<?php echo $today->team_current($team['team'], 'W') . '-' . $today->team_current($team['team'], 'L'); ?>
+									</td>
+									<td class="center">
+										<i><?php echo $today->team_current($team['team'], 'W_PCT'); ?></i>
+									</td>
+									<td class="center border-left">
+										<strong class="positive"><?php echo $team['score']; ?></strong>
+									</td>
 								</tr>
 							<?php } // foreach team ?>
 						</tbody>

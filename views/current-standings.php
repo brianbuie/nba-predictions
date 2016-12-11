@@ -1,22 +1,4 @@
-	<?php 
-		$current_day = new DateTime();
-		$first_day = new DateTime('2016-10-01');
-		$prev_day = new DateTime( $date->format('Y-m-d') );
-		$prev_day->modify('-1 day');
-		$next_day = new DateTime( $date->format('Y-m-d') );
-		$next_day->modify('+1 day');
-	?>
-	<h4 class="center">
-		<?php 
-		if( $prev_day->format('U') >= $first_day->format('U') ){
-			echo '<a href="?date=' . $prev_day->format('Y-m-d') . '"><i class="date-nav fa fa-arrow-left"></i></a>';
-		}
-		echo $date->format('F j, Y');
-		if( $next_day->format('U') < $current_day->format('U') ){
-			echo '<a href="?date=' . $next_day->format('Y-m-d') . '"><i class="date-nav fa fa-arrow-right"></i></a>';
-		}
-		?>
-	</h4>
+	<h4 class="center spaced-out"> League Standings </h4>
 	<div class="row">
 		<?php foreach ($today->current->standings as $conference => $standings) { ?>
 			<div class="col-lg-6">
@@ -24,6 +6,7 @@
 					<table class="table table-sm table-inverse">
 						<thead>
 							<tr class="bg-primary">
+								<th class="right"></th>
 								<th class="center"> Rank </th>
 								<th class="capitalize"><?php echo $conference; ?>ern Conference </th>
 								<th class="center"> Record </th>
@@ -37,6 +20,7 @@
 								<?php } else { ?>
 									<tr class="incorrect">
 								<?php } ?>
+								<td class="right"><?php echo display_difference($game->team_rank_difference($team['TEAM_ID']), $inverted = true); ?></td>
 								<td class="center"><?php echo $i + 1; ?></td>
 								<td><?php echo $team['TEAM']; ?></td>
 								<td class="center"><?php echo $team['W'] . '-' . $team['L']; ?></td>
