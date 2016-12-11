@@ -5,8 +5,7 @@ class Api {
 	public $standings;
 
 	function __construct($date){
-		$results = $this->fetch_standings($date);
-		$standings = [];
+		$results = $this->get_standings($date);
 		foreach($results->resultSets[4]->rowSet as $key => $team){
 		    $standings['east'][$key] = $this->map_headers($results->resultSets[4]->headers, $team);
 		    $standings['east'][$key]['RANK'] = $key + 1;
@@ -16,6 +15,21 @@ class Api {
 		    $standings['west'][$key]['RANK'] = $key + 1;
 		}
 		$this->standings = array_reverse($standings);
+	}
+
+	protected function get_standings($date){
+		$cache_location = 'data/api/' . $date->format('Y-m-d') . '.json';
+		$cache_threshold = new DateTime();
+		$cache_threshold->modify('-3 days');
+		if(file_exists($cache_location)){
+			$data = file_get_contents($cache_location);
+		} else {
+			$data = json_encode($this->fetch_standings($date), JSON_PRETTY_PRINT);
+			if( $date < $cache_threshold ){
+				file_put_contents($cache_location, $data);
+			}
+		}
+		return json_decode($data);
 	}
 
 	protected function fetch_standings($date){
