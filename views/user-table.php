@@ -1,6 +1,6 @@
 <div class="user-container">
 	<h5 class="center capitalize"><?php echo $user->name;?></h5>
-	<h3 class="center points"><?php echo $user->total_score . ' points';?></h3>
+	<h3 class="center points"><?php echo $user->score . ' points';?></h3>
 	<div class="row">
 		<?php foreach ($user->picks as $division => $standings){ ?>
 			<div class="col-lg-6">
@@ -17,7 +17,7 @@
 						</thead>
 						<tbody>
 							<?php foreach ($standings as $i => $team) { ?>
-								<?php if($team['correct_placement']){ ?>
+								<?php if($team['placement']['correct_%'] == 1){ ?>
 									<tr class="correct">
 								<?php } else { ?>
 									<tr class="incorrect">
@@ -25,10 +25,10 @@
 								<td class="center"><?php echo $i; ?></td>
 								<td><?php echo $today->team_current($team['team'], 'TEAM'); ?></td>
 								<td class="center border-left"><?php echo $team['wins'] . '-' . (82 - intval($team['wins'])); ?></td>
-								<td class="center"><i><?php echo $team['w_pct']; ?></i></td>
+								<td class="center"><i><?php echo $team['w_pct']['predicted']; ?></i></td>
 								<td class="center border-left"><?php echo $today->team_current($team['team'], 'W') . '-' . $today->team_current($team['team'], 'L'); ?></td>
 								<td class="center"><i><?php echo $today->team_current($team['team'], 'W_PCT'); ?></i></td>
-								<td class="center border-left"><strong class="points"><?php echo $team['total_score']; ?></strong></td>
+								<td class="center border-left"><strong class="points"><?php echo $team['score']; ?></strong></td>
 								</tr>
 							<?php } // foreach team ?>
 						</tbody>

@@ -17,10 +17,16 @@ foreach($entries as $user => $files){
 }
 
 if(isset($_GET['date'])){
-	$today = new Game( new DateTime($_GET['date']), $users );
+	$date = new DateTime($_GET['date']);
+	
 } else {
-	$today = new Game( new DateTime(), $users );
+	$date = new DateTime();
 }
+
+$today = new Game($date, $users);
+
+// echo '<pre>';
+// var_dump($today);
 
 // View
 include('views/head.php'); 

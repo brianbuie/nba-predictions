@@ -1,4 +1,22 @@
-	<h4 class="center">Current Standings</h4>
+	<?php 
+		$current_day = new DateTime();
+		$first_day = new DateTime('2016-10-01');
+		$prev_day = new DateTime( $date->format('Y-m-d') );
+		$prev_day->modify('-1 day');
+		$next_day = new DateTime( $date->format('Y-m-d') );
+		$next_day->modify('+1 day');
+	?>
+	<h4 class="center">
+		<?php 
+		if( $prev_day->format('U') >= $first_day->format('U') ){
+			echo '<a href="?date=' . $prev_day->format('Y-m-d') . '"><i class="date-nav fa fa-arrow-left"></i></a>';
+		}
+		echo $date->format('F j, Y');
+		if( $next_day->format('U') < $current_day->format('U') ){
+			echo '<a href="?date=' . $next_day->format('Y-m-d') . '"><i class="date-nav fa fa-arrow-right"></i></a>';
+		}
+		?>
+	</h4>
 	<div class="row">
 		<?php foreach ($today->current->standings as $conference => $standings) { ?>
 			<div class="col-lg-6">
