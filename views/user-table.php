@@ -26,7 +26,7 @@
 										<?php echo $i; ?>
 									</td>
 									<td>
-										<?php echo $today->team_current($team['team'], 'ABRV'); ?>
+										<?php echo $game->current->team_actual($team['team'], 'ABRV'); ?>
 									</td>
 									<td class="center border-left">
 										<?php echo $team['wins'] . '-' . (82 - intval($team['wins'])); ?>
@@ -35,10 +35,10 @@
 										<i><?php echo $team['w_pct']['predicted']; ?></i>
 									</td>
 									<td class="center border-left">
-										<?php echo $today->team_current($team['team'], 'W') . '-' . $today->team_current($team['team'], 'L'); ?>
+										<?php echo $game->current->team_actual($team['team'], 'W') . '-' . $game->current->team_actual($team['team'], 'L'); ?>
 									</td>
 									<td class="center">
-										<i><?php echo $today->team_current($team['team'], 'W_PCT'); ?></i>
+										<i><?php echo $game->current->team_actual($team['team'], 'W_PCT'); ?></i>
 									</td>
 									<td class="center border-left">
 										<strong class="positive"><?php echo $team['score']; ?></strong>

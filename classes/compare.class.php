@@ -1,17 +1,13 @@
 <?php
 
-class Difference {
+class Compare {
 
 	public $current;
 	public $compare;
 
 	function __construct($current_date, $compare_date){
-		$this->current = new Game($current_date);
-		$this->compare = new Game($compare_date);
-	}
-
-	public function get_current_game(){
-		return $this->current;
+		$this->current = new GameState($current_date);
+		$this->compare = new GameState($compare_date);
 	}
 
 	public function user_score_difference($username){
@@ -41,7 +37,7 @@ class Difference {
 	}
 
 	protected function get_team_stat($team_id, $game, $stat){
-		foreach($game->current->standings as $conference){
+		foreach($game->standings->standings as $conference){
 			foreach($conference as $team){
 				if($team['TEAM_ID'] == $team_id){
 					return $team[$stat];

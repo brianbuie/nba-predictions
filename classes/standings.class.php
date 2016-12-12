@@ -1,6 +1,6 @@
 <?php
 
-class Api {
+class Standings {
 
 	public $standings;
 
@@ -16,6 +16,7 @@ class Api {
 		    $standings['west'][$key]['RANK'] = $key + 1;
 		    $standings['west'][$key]['ABRV'] = $this->get_abbreviation($team[0]);
 		}
+		// make west come before east
 		$this->standings = array_reverse($standings);
 	}
 

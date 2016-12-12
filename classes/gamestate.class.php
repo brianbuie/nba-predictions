@@ -1,8 +1,8 @@
 <?php
 
-class Game {
+class GameState {
 
-	public $current;
+	public $standings;
 	public $users;
 
 	// point values
@@ -19,12 +19,16 @@ class Game {
 		}
 		foreach($entries as $user => $files){
 			$picks = json_decode(file_get_contents('data/' . end($files) . '.json'), true);
+			// create users from their picks
 			$users[$user] = new User($user, $picks);
 		}
-		$this->current = new Api($date);
+		// get standings
+		$this->standings = new Standings($date);
 		foreach($users as $user){
+			// score user picks
 			$this->total_score($user);
 		}
+		// sort users based on total score
 		$this->users = $this->sort_users($users);
 	}
 
@@ -35,26 +39,30 @@ class Game {
 		foreach($user->picks as $conference => $teams){
 			foreach($teams as $rank => $team){
 				$pick_scores = $this->score_pick($team);
+				// set team name in pick object
 				$user->set_pick_info($team['team'], $pick_scores);
+				// add pick score to total score
 				$score += $pick_scores['score'];
 			}
 		}
+		// set the user's total score in user object
 		$user->set_user_info('score', $score);
 	}
 
 	// scores one individual pick, returns array of score info
 	function score_pick($pick){
-		$actual = $this->team_current($pick['team']);
+		$actual = $this->team_actual($pick['team']);
 		$score_info['placement'] = $this->score_placement($pick);
 		$score_info['w_pct'] = $this->score_w_pct($pick);
 		$score_info['score'] = $score_info['placement']['score'] + $score_info['w_pct']['score'];
+		// nested array
 		return $score_info;
 	}
 
 	// compare actual conference placement with predicted placement
 	// scoring based on % correct
 	function score_placement($pick){
-		$actual = $this->team_current($pick['team'], 'RANK');
+		$actual = $this->team_actual($pick['team'], 'RANK');
 		$rank_value = 1/15;
 		$difference = abs($actual - $pick['rank']);
 		$correct = 1 - ($difference * $rank_value);
@@ -73,7 +81,7 @@ class Game {
 	// compare win percentages
 	// scoring based on % correct
 	function score_w_pct($pick){
-		$actual = $this->team_current($pick['team'], 'W_PCT');
+		$actual = $this->team_actual($pick['team'], 'W_PCT');
 		$predicted = round($pick['wins']/82, 3);
 		$difference = abs($actual - $predicted);
 		$correct = 1 - $difference;
@@ -91,8 +99,8 @@ class Game {
 
 	// get the current team stats
 	// or return one stat if specified in arguments
-	function team_current($id, $stat = null){
-		foreach($this->current->standings as $conference){
+	function team_actual($id, $stat = null){
+		foreach($this->standings->standings as $conference){
 			foreach($conference as $rank => $team){
 				if($team['TEAM_ID'] == $id){
 					if($stat){
@@ -110,11 +118,11 @@ class Game {
 			$map[$key] = $user->score;
 		}
 		arsort($map);
-		$new_users = [];
+		$sorted_users = [];
 		foreach($map as $key => $whatever){
-			array_push($new_users, $users[$key]);
+			array_push($sorted_users, $users[$key]);
 		}
-		return $new_users;
+		return $sorted_users;
 	}
 
 }

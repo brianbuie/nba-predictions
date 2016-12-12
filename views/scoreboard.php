@@ -38,7 +38,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<?php foreach( $today->users as $rank => $user ){ ?>
+							<?php foreach( $game->current->users as $rank => $user ){ ?>
 								<tr>
 									<td class="center">
 										<?php echo $rank + 1; ?>
@@ -57,7 +57,7 @@
 										<?php echo display_difference($game->user_score_difference($user->name)); ?>
 									</td>
 								</tr>
-							<?php } ?>
+							<?php } // foreach user ?>
 						</tbody>
 					</table>
 				</div>

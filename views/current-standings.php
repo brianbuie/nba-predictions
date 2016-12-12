@@ -1,6 +1,6 @@
 	<h4 class="center spaced-out"> League Standings </h4>
 	<div class="row">
-		<?php foreach ($today->current->standings as $conference => $standings) { ?>
+		<?php foreach ($game->current->standings->standings as $conference => $standings) { ?>
 			<div class="col-lg-6">
 				<div class="table-responsive">
 					<table class="table table-sm table-inverse">
@@ -14,17 +14,27 @@
 							</tr>
 						</thead>
 						<tbody>
-							<?php foreach ($standings as $i => $team) { ?>
-								<?php if($i < 8){ ?>
+							<?php foreach ($standings as $key => $team) { ?>
+								<?php if($key < 8){ ?>
 									<tr>
 								<?php } else { ?>
 									<tr class="incorrect">
 								<?php } ?>
-								<td class="right"><?php echo display_difference($game->team_rank_difference($team['TEAM_ID']), $inverted = true); ?></td>
-								<td class="center"><?php echo $i + 1; ?></td>
-								<td><?php echo $team['TEAM']; ?></td>
-								<td class="center"><?php echo $team['W'] . '-' . $team['L']; ?></td>
-								<td class="center"><i><?php echo $team['W_PCT']; ?></i></td>
+									<td class="right">
+										<?php echo display_difference($game->team_rank_difference($team['TEAM_ID']), $inverted = true); ?>
+									</td>
+									<td class="center">
+										<?php echo $key + 1; ?>
+									</td>
+									<td>
+										<?php echo $team['TEAM']; ?>
+									</td>
+									<td class="center">
+										<?php echo $team['W'] . '-' . $team['L']; ?>
+									</td>
+									<td class="center">
+										<i><?php echo $team['W_PCT']; ?></i>
+									</td>
 								</tr>
 							<?php } // foreach team ?>
 						</tbody>
