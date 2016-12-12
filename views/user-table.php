@@ -26,7 +26,7 @@
 										<?php echo $i; ?>
 									</td>
 									<td>
-										<?php echo $today->team_current($team['team'], 'TEAM'); ?>
+										<?php echo $today->team_current($team['team'], 'ABRV'); ?>
 									</td>
 									<td class="center border-left">
 										<?php echo $team['wins'] . '-' . (82 - intval($team['wins'])); ?>

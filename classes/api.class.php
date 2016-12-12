@@ -9,10 +9,12 @@ class Api {
 		foreach($results->resultSets[4]->rowSet as $key => $team){
 		    $standings['east'][$key] = $this->map_headers($results->resultSets[4]->headers, $team);
 		    $standings['east'][$key]['RANK'] = $key + 1;
+		    $standings['east'][$key]['ABRV'] = $this->get_abbreviation($team[0]);
 		}
 		foreach($results->resultSets[5]->rowSet as $key => $team){
 		    $standings['west'][$key] = $this->map_headers($results->resultSets[5]->headers, $team);
 		    $standings['west'][$key]['RANK'] = $key + 1;
+		    $standings['west'][$key]['ABRV'] = $this->get_abbreviation($team[0]);
 		}
 		$this->standings = array_reverse($standings);
 	}
@@ -53,6 +55,17 @@ class Api {
 	        $mapped[$val] = $array[$key];
 	    }
 	    return $mapped;
+	}
+
+	protected function get_abbreviation($team_id){
+		if(!property_exists($this, 'abbreviations')){
+			$this->abbreviations = json_decode(file_get_contents('data/team-abbreviations.json'));
+		}
+		foreach($this->abbreviations as $id => $abbreviation){
+			if($team_id == $id){
+				return $abbreviation;
+			}
+		}
 	}
 
 	public function get_team_stats($team_id){
