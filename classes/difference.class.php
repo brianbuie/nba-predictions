@@ -20,6 +20,12 @@ class Difference {
 		return $current_score - $compare_score;
 	}
 
+	public function pick_score_difference($username, $conference, $rank){
+		$current_score = $this->get_user_stat($username, $this->current, 'picks')[$conference][$rank]['score'];
+		$compare_score = $this->get_user_stat($username, $this->compare, 'picks')[$conference][$rank]['score'];
+		return $current_score - $compare_score;
+	}
+
 	public function team_rank_difference($team_id){
 		$current_rank = $this->get_team_stat($team_id, $this->current, 'RANK');
 		$compare_rank = $this->get_team_stat($team_id, $this->compare, 'RANK');
