@@ -1,6 +1,7 @@
 <?php
 
 class User {
+	
 	public $name;
 	public $picks;
 
@@ -15,9 +16,9 @@ class User {
 		}
 	}
 
-	public function get_conference_picks($conference){
-		return $this->picks[$conference];
-	}
+	// public function get_conference_picks($conference){
+	// 	return $this->picks[$conference];
+	// }
 
 	public function set_pick_info($team_id, $values_array){
 		foreach($this->picks as $conference => $teams){

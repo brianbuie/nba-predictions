@@ -20,7 +20,7 @@ class Standings {
 		$this->standings = array_reverse($standings);
 	}
 
-	protected function get_standings($date){
+	private function get_standings($date){
 		$cache_location = 'data/api/' . $date->format('Y-m-d') . '.json';
 		$cache_threshold = new DateTime();
 		$cache_threshold->modify('-3 days');
@@ -35,7 +35,7 @@ class Standings {
 		return json_decode($data);
 	}
 
-	protected function fetch_standings($date){
+	private function fetch_standings($date){
 		$url = 'stats.nba.com/stats/scoreboard/';
 		$data = '?GameDate=' . $date->format('m/d/Y') . '&LeagueID=00&DayOffset=0';
 		$service_url = $url . $data;
@@ -50,7 +50,7 @@ class Standings {
 		return json_decode($curl_response);
 	}
 
-	protected function map_headers($headers, $array){
+	private function map_headers($headers, $array){
 	    $mapped = [];
 	    foreach($headers as $key => $val){
 	        $mapped[$val] = $array[$key];
@@ -58,23 +58,13 @@ class Standings {
 	    return $mapped;
 	}
 
-	protected function get_abbreviation($team_id){
+	private function get_abbreviation($team_id){
 		if(!property_exists($this, 'abbreviations')){
 			$this->abbreviations = json_decode(file_get_contents('data/team-abbreviations.json'));
 		}
 		foreach($this->abbreviations as $id => $abbreviation){
 			if($team_id == $id){
 				return $abbreviation;
-			}
-		}
-	}
-
-	public function get_team_stats($team_id){
-		foreach($this->standings as $conference){
-			foreach($conference as $team){
-				if($team['TEAM_ID'] == $team_id){
-					return $team;
-				}
 			}
 		}
 	}

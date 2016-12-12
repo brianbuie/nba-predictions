@@ -4,16 +4,19 @@ include('classes/standings.class.php');
 include('classes/user.class.php');
 include('classes/gamestate.class.php');
 include('classes/compare.class.php');
+include('classes/date.class.php');
 
 // instantiation
 if(isset($_GET['date'])){
-	$date = new DateTime($_GET['date']);
+	$date = new Date($_GET['date']);
 } else {
-	$date = new DateTime();
+	$date = new Date('now');
 }
-$day_before = new DateTime($date->format('Y-m-d'));
-$day_before->modify('-2 days');
-$game = new Compare($date, $day_before);
+if(!$date->is_valid()){
+	header('Location: /');
+}
+
+$game = new Compare($date->selected_day, $date->compare_day);
 
 // View helpers
 include('views/helpers/display_difference.php');

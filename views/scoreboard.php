@@ -1,26 +1,18 @@
-<?php
-	$current_day = new DateTime();
-	$first_day = new DateTime('2016-10-01');
-	$prev_day = new DateTime( $date->format('Y-m-d') );
-	$prev_day->modify('-1 day');
-	$next_day = new DateTime( $date->format('Y-m-d') );
-	$next_day->modify('+1 day');
-?>
 <div class="row">
 	<div class="col-md-6 offset-md-3 user-container spaced-out">
 		<div class="row">
 			<div class="col-xs-2 center">
-				<?php if( $prev_day > $first_day ){ ?>
+				<?php if( $prev_day = $date->get_prev_day() ){ ?>
 					<a href="?date=<?php echo $prev_day->format('Y-m-d'); ?>"><i class="date-nav fa fa-arrow-left"></i></a>
 				<?php } ?>
 			</div>
 			<div class="col-xs-8 center">
 				<h5>
-					<?php echo $date->format('F j, Y'); ?>
+					<?php echo $date->format($date->selected_day, 'F j, Y'); ?>
 				</h5>
 			</div>
 			<div class="col-xs-2 center">
-				<?php if( $next_day < $current_day ){ ?>
+				<?php if( $next_day = $date->get_next_day() ){ ?>
 					<a href="?date=<?php echo $next_day->format('Y-m-d'); ?>"><i class="date-nav fa fa-arrow-right"></i></a>
 				<?php } ?>
 			</div>

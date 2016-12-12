@@ -5,7 +5,7 @@ class Compare {
 	public $current;
 	public $compare;
 
-	function __construct($current_date, $compare_date){
+	public function __construct($current_date, $compare_date){
 		$this->current = new GameState($current_date);
 		$this->compare = new GameState($compare_date);
 	}
@@ -28,7 +28,7 @@ class Compare {
 		return $current_rank - $compare_rank;
 	}
 
-	protected function get_user_stat($username, $game, $stat){
+	private function get_user_stat($username, $game, $stat){
 		foreach($game->users as $user){
 			if($user->name == $username){
 				return $user->$stat;
@@ -36,7 +36,7 @@ class Compare {
 		}
 	}
 
-	protected function get_team_stat($team_id, $game, $stat){
+	private function get_team_stat($team_id, $game, $stat){
 		foreach($game->standings->standings as $conference){
 			foreach($conference as $team){
 				if($team['TEAM_ID'] == $team_id){
