@@ -6,10 +6,10 @@ class GameState {
 	public $users;
 
 	// point values
-	private $placement_points = 100;
-	private $placement_bonus = 50;
-	private $w_pct_points = 50;
-	private $w_pct_bonus = 100;
+	private $placement_points = 15;
+	private $placement_bonus = 15;
+	private $w_pct_points = 0;
+	private $w_pct_bonus = 15;
 
 	public function __construct($date){
 		$entries = json_decode(file_get_contents('data/entries.json'), true);

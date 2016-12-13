@@ -1,9 +1,8 @@
 	<div class="row">
 		<div class="col-xs-12 spaced-out center">
 			<h1 class="spaced-out">Scoring</h1>
-			<p>Scoring is based on % correct compared to actual standings and win percentage</p>
-			<p>Position predictions are out of <span class="positive">100 points</span>, with a <span class="positive">50 point</span> bonus for being 100% correct</p>
-			<p>Wins are now ranked by comparing win percentage, out of <span class="positive">50 points</span>, with a <span class="positive">100 point</span> bonus for being 100% correct</p>
+			<p>Position predictions are out of <span class="positive">15 points</span>, with a bonus of <span class="positive">15 points</span> for being 100% correct</p>
+			<p>There's an additional bonus of <span class="positive">15 points</span> for guessing the win % correctly</p>
 		</div>
 	</div>
 </div> <!-- /container -->

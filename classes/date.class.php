@@ -42,4 +42,9 @@ class Date{
 			return true;
 		}
 	}
+
+	public function modify($string){
+		$this->selected_day->modify($string);
+		$this->__construct($this->selected_day->format('Y-m-d'));
+	}
 }
