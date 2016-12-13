@@ -6,6 +6,10 @@ include('classes/gamestate.class.php');
 include('classes/compare.class.php');
 include('classes/date.class.php');
 
+// Helpers
+include('classes/helpers/image.helper.php');
+$images = new ImageHelper;
+
 // instantiation
 if(isset($_GET['date'])){
 	$date = new Date($_GET['date']);

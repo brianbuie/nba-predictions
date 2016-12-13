@@ -24,6 +24,9 @@ h1, h2, h3, h4, h5{
 .padding-bottom{
 	padding-bottom: 2rem;
 }
+.padding-bottom-sm{
+	padding-bottom: 1rem;
+}
 
 /* Utilities */
 .correct{
@@ -83,4 +86,17 @@ input, select, button{
 }
 .date-nav{
 	font-size: 20px;
+}
+.user-image{
+	width: 100px;
+	height: 100px;
+	margin: 20px auto;
+	border-radius: 50%;
+	text-align: center;
+	background-color: rgba(255,255,255, 0.1);
+	overflow: hidden;
+}
+.user-image img{
+	max-width: 100%;
+	height: auto;
 }
