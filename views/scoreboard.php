@@ -1,6 +1,6 @@
 <div class="row spaced-out">
 	<?php foreach( $game->current->users as $rank => $user ){ ?>
-		<div class="col-sm-6 col-md-3">
+		<div class="col-sm-6 col-md-3 spaced-out">
 			<div class="user-image">
 				<?php echo $images->get_user_image($user->name); ?>
 			</div>

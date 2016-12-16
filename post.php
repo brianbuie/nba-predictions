@@ -10,6 +10,7 @@
 
 // THIS NO LONGER WORKS!!!
 // NEEDS TO BE REFACTORED TO INCLUDE TEAM ID'S INSTEAD OF NAMES
+// or completely scrapped since it's just procedural bullshit.
 
 
 $OPEN_SUBMISSIONS = false;
