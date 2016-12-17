@@ -1,5 +1,8 @@
 <?php
 header('Content-type: application/json');
+if($_SERVER['HTTP_HOST']=='localhost'){
+	header('Access-Control-Allow-Origin: http://localhost:3000');
+}
 // Classes
 include('classes/standings.class.php');
 include('classes/user.class.php');
