@@ -2,7 +2,7 @@
 
 $entries = json_decode(file_get_contents('data/images.json'), true);
 
-if(isset($_POST)){
+if(isset($_POST['name'])){
 	$name = strtolower($_POST['name']);
 	$image = $_POST['image'];
 	$password = hash('sha256', $_POST['password']);

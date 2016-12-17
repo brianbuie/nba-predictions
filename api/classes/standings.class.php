@@ -22,7 +22,7 @@ class Standings {
 	}
 
 	private function get_standings($date){
-		$cache_location = 'data/api/' . $date->format('Y-m-d') . '.json';
+		$cache_location = 'data/nba/' . $date->format('Y-m-d') . '.json';
 		$cache_threshold = new DateTime();
 		$cache_threshold->modify('-3 days');
 		if(file_exists($cache_location)){
