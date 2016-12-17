@@ -4,6 +4,7 @@ class User {
 	
 	public $name;
 	public $picks;
+	public $img;
 
 	function __construct($name, $picks){
 		$this->name = $name;
@@ -13,6 +14,10 @@ class User {
 				$values = ['rank' => $rank];
 				$this->set_pick_info($team['team'], $values);
 			}
+		}
+		$images = json_decode(file_get_contents('data/images.json'), true);
+		if(array_key_exists($this->name, $images)){
+			$this->img = end($images[$this->name]);
 		}
 	}
 

@@ -3,7 +3,7 @@
 // QUERY PARAMETERS
 // ?date = start date for getting games, default to now
 // ?days = number of days to include, use large number to get all
-// ?include = null, 'scores', 'standings', 'users' to get just those respective pieces
+// ?include = null, 'scores', 'standings', 'users' to get just those respective pieces, null defaults to all
 
 class Api{
 
@@ -44,17 +44,19 @@ class Api{
 
 	private function make_data(){
 		foreach($this->games as $date => $game){
+			$data['date'] = $date;
 			if($this->include == 'all' || $this->include == 'standings'){
-				$this->data[$date]['standings'] = $game->standings->standings;
+				$data['standings'] = $game->standings->standings;
 			}
 			if($this->include == 'all' || $this->include == 'users'){
-				$this->data[$date]['users'] = $game->users;
+				$data['users'] = $game->users;
 			}
 			if($this->include == 'scores'){
 				foreach($game->users as $user){
-					$this->data[$date]['scores'][$user->name] = $user->score;
+					$this->data['scores'][$user->name] = $user->score;
 				}
 			}
+			$this->data[] = $data;
 		}
 	}
 }
