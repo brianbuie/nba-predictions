@@ -53,7 +53,7 @@ class Api{
 			}
 			if($this->include == 'scores'){
 				foreach($game->users as $user){
-					$this->data['scores'][$user->name] = $user->score;
+					$data['scores'][$user->name] = $user->score;
 				}
 			}
 			$this->data[] = $data;
