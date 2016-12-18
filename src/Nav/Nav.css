@@ -1,0 +1,18 @@
+nav{
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	background-color: rgb(45, 62, 89);
+	padding: 0.5rem;
+	align-items: center;
+}
+.title{
+	flex-grow: 1;
+}
+.nav-link-container{
+	width: 3rem;
+}
+.nav-link{
+	font-size: 18px;
+	padding: 0.5rem;
+}

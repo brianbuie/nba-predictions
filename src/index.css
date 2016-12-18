@@ -1,5 +1,56 @@
+html {
+	font-size: 13px;
+}
 body {
 	margin: 0;
 	padding: 0;
-	font-family: sans-serif;
+	background-color: #000;
+	color: #ddd;
+}
+h1, h2, h3, h4, h5{
+	margin: 0;
+}
+a{
+	color: rgb(255, 130, 46);
+}
+.row{
+	padding-top: 2rem;
+	padding-bottom: 2rem;
+}
+
+/* Utilities */
+/* TEXT */
+.txt-faded{
+	color: #888;
+}
+.txt-capitalize{
+	text-transform: capitalize;
+}
+.txt-positive{
+	color: #43ba70;
+}
+.txt-negative{
+	color: #cc4747;
+}
+.txt-center{
+	text-align: center;
+}
+.txt-left{
+	text-align: left;
+}
+.txt-right{
+	text-align: right;
+}
+/* SPACING */
+.spaced-out-sm{
+	margin-top: 0.5rem;
+	margin-bottom: 0.5rem;
+}
+.spaced-out-md{
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+.spaced-out-lg{
+	margin-top: 2rem;
+	margin-bottom: 2rem;
 }
