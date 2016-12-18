@@ -1,0 +1,19 @@
+th{
+	text-align: inherit;
+}
+.table{
+	margin-bottom: 0;
+}
+.table-sm td{
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+}
+.border-left{
+	border-left: 1px solid grey;
+}
+.table > tbody > tr > td {
+    vertical-align: middle;
+}
+.table-sm{
+	font-size: 0.9rem;
+}

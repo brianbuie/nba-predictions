@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import './Standings.css';
 
 class Standings extends Component {
 
 	render() {
 		return (
-			<div className={ this.props.className }>
+			<div className="col-lg-6">
 				<div className="table-responsive">
 					<table className="table table-sm table-inverse">
 						<thead>

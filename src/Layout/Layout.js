@@ -1,5 +1,6 @@
 // dependencies
 import Nav from '../Nav/Nav';
+import Picks from '../Picks/Picks';
 import React, { Component } from 'react';
 import Scoreboard from '../Scoreboard/Scoreboard';
 import Standings from '../Standings/Standings';
@@ -18,14 +19,13 @@ class Layout extends Component {
 						<Standings
 							conference="West"
 							standings={ this.props.standings.west }
-							className="col-lg-6"
 						/>
 						<Standings
 							conference="East"
 							standings={ this.props.standings.east }
-							className="col-lg-6"
 						/>
 					</div>
+					<Picks users={ this.props.users } />
 				</div>
 			</div>
 		);

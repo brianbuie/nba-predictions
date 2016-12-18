@@ -11,7 +11,7 @@ class Nav extends Component {
 				<div className="nav-link-container">
 					{ this.arrow('left', this.props.leftLink) }
 				</div>
-				<h4 className="title txt-center">
+				<h4 className="title">
 					{ this.props.title }
 				</h4>
 				<div className="nav-link-container">
