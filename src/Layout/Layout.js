@@ -13,7 +13,8 @@ class Layout extends Component {
 	render() {
 		return (
 			<div>
-				{ this.props.loading ? <Loading /> : this.pageLayout() }
+				{ this.props.loading ? <Loading /> : null }
+				{ this.props.standings ? this.pageLayout() : null }
 			</div>
 		);
 	}

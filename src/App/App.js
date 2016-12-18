@@ -14,19 +14,18 @@ class App extends Component {
 
 	render() {
 		return (
-			<Layout {...this.state} />
+			<Layout {...this.state} dateChange={ (delta) => { this.handleDateChange(delta) } }/>
 		);
 	}
 
-	handleDateChange(ordinal){
-		let date = new Moment(this.state.date);
-		date.add(ordinal + ' days');
-		this.fetchData( date.format('YYYY-MM-DD') );
+	handleDateChange(delta){
+		let date = new Moment(this.state.date).add(delta, 'days');
+		this.fetchData( date.format('YYYY-MM-DD'));
 	}
 
 	fetchData(date){
 		this.setState({ loading: true });
-		let query = date ? 'date=' + date : null;
+		let query = date ? '?date=' + date : "";
 		Api.get(query, (data) => { 
 			this.setState( data[0] );
 			this.setState({ loading: false });

@@ -1,6 +1,6 @@
 function get(query, callback) {
 	let host = window.location.hostname === "localhost" ? "http://localhost:80/nba/" : "/";
-	return fetch(`${host}api/?${query}`, {
+	return fetch(`${host}api/${query}`, {
 		accept: 'application/json',
 	}).then(checkStatus)
 		.then(parseJSON)

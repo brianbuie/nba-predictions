@@ -10,13 +10,13 @@ class Nav extends Component {
 		return (
 			<nav>
 				<div className="nav-link-container">
-					{ this.arrow('left', null) }
+					{ this.arrow('left', () => {this.props.dateChange(-1)}) }
 				</div>
 				<h4 className="title">
 					{ this.title() }
 				</h4>
 				<div className="nav-link-container">
-					{ this.arrow('right', null) }
+					{ this.arrow('right', () => {this.props.dateChange(1)}) }
 				</div>
 			</nav>
 		);
@@ -30,7 +30,7 @@ class Nav extends Component {
 	arrow(direction, action) {
 		if(action){
 			return (
-				<a className={"nav-link nav-" + direction } onClick={ action } href="">
+				<a className={"nav-link nav-" + direction } onClick={ action }>
 					<FontAwesome name={"arrow-" + direction } />
 				</a>
 			);
