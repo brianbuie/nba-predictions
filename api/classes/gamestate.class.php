@@ -49,25 +49,33 @@ class GameState {
 		$score = 0;
 		foreach($user->picks as $conference => $teams){
 			foreach($teams as $rank => $team){
-				$pick_scores = $this->score_pick($team);
-				// set team name in pick object
-				$user->set_pick_info($team['team'], $pick_scores);
+				// score both placement and win percentage for pick and get team info
+				$pick_details = $this->get_pick_details($team);
+				// set the pick info
+				$user->set_pick_info($team['team'], $pick_details);
 				// add pick score to total score
-				$score += $pick_scores['score'];
+				$score += $pick_details['score'];
 			}
 		}
 		// set the user's total score in user object
 		$user->set_user_info('score', $score);
 	}
 
-	// scores one individual pick, returns array of score info
-	private function score_pick($pick){
+	// scores one individual pick and gets team info, returns array of score and team info
+	private function get_pick_details($pick){
 		$actual = $this->team_actual($pick['team']);
-		$score_info['placement'] = $this->score_placement($pick);
-		$score_info['w_pct'] = $this->score_w_pct($pick);
-		$score_info['score'] = $score_info['placement']['score'] + $score_info['w_pct']['score'];
+		$pick_info['placement'] = $this->score_placement($pick);
+		$pick_info['w_pct'] = $this->score_w_pct($pick);
+		$pick_info['score'] = $pick_info['placement']['score'] + $pick_info['w_pct']['score'];
+		$pick_info['name'] = $actual['TEAM'];
+		$pick_info['abrv'] = $actual['ABRV'];
+		$pick_info['actual'] = [
+			'g' => $actual['G'],
+			'w' => $actual['W'],
+			'l' => $actual['L']
+		];
 		// nested array
-		return $score_info;
+		return $pick_info;
 	}
 
 	// compare actual conference placement with predicted placement

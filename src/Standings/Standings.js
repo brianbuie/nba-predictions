@@ -8,7 +8,7 @@ class Standings extends Component {
 				<div className="table-responsive">
 					<table className="table table-sm table-inverse">
 						<thead>
-							<tr className="bg-primary">
+							<tr className="bg-brand-primary">
 								<th className="txt-right"></th>
 								<th className="txt-center"> Rank </th>
 								<th className="txt-capitalize">{ this.props.conference }</th>

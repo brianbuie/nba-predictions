@@ -10,11 +10,7 @@ import './App.css';
 class App extends Component {
 
 	componentWillMount(){
-		this.setState({ loading: true });
-		Api.get('date=2016-11-11', (data) => { 
-			this.setState( data[0] );
-			this.setState({ loading: false });
-		});
+		this.fetchData();
 	}
 
 	render() {
@@ -29,11 +25,28 @@ class App extends Component {
 		let date = new Moment(this.state.date);
 		return (
 			<Layout
-				title={date.format('MMMM D, Y')}
-				standings={this.state.standings}
-				users={this.state.users}
+				title={ date.format('MMMM D, Y') }
+				standings={ this.state.standings }
+				users={ this.state.users }
+				prevLink={ () => { this.handleDateChange(-1) } }
+				nextLink={ () => { this.handleDateChange(1) } }
 			/>
 		);
+	}
+
+	handleDateChange(ordinal){
+		let date = new Moment(this.state.date);
+		date.add(ordinal + ' days');
+		this.fetchData( date.format('YYYY-MM-DD') );
+	}
+
+	fetchData(date){
+		this.setState({ loading: true });
+		let query = date ? 'date=' + date : null;
+		Api.get(query, (data) => { 
+			this.setState( data[0] );
+			this.setState({ loading: false });
+		});
 	}
 
 

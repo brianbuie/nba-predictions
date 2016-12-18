@@ -9,22 +9,22 @@ class Nav extends Component {
 		return (
 			<nav>
 				<div className="nav-link-container">
-					{ this.arrow('left', this.props.leftLink) }
+					{ this.arrow('left', this.props.prevLink) }
 				</div>
 				<h4 className="title">
 					{ this.props.title }
 				</h4>
 				<div className="nav-link-container">
-					{ this.arrow('right', this.props.rightLink) }
+					{ this.arrow('right', this.props.nextLink) }
 				</div>
 			</nav>
 		);
 	}
 
-	arrow(direction, href) {
-		if(href){
+	arrow(direction, action) {
+		if(action){
 			return (
-				<a className={"nav-link nav-" + direction } href={ href }>
+				<a className={"nav-link nav-" + direction } onClick={ action } href="">
 					<FontAwesome name={"arrow-" + direction } />
 				</a>
 			);

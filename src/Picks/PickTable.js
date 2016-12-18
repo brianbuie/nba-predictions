@@ -11,7 +11,7 @@ class PickTable extends Component {
 						{ i + 1 }
 					</td>
 					<td>
-						{ pick.team }
+						{ pick.abrv }
 					</td>
 					<td className="border-left">
 						{ pick.wins }-{ (82 - pick.wins) }
@@ -20,7 +20,7 @@ class PickTable extends Component {
 						{ pick.w_pct.predicted }
 					</td>
 					<td className="border-left">
-						 W - L
+						{ pick.actual.w }-{ pick.actual.l }
 					</td>
 					<td className="txt-italic">
 						 { pick.w_pct.actual }

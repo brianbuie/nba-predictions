@@ -12,7 +12,7 @@ class Layout extends Component {
 	render() {
 		return (
 			<div>
-				<Nav leftLink="#" title={ this.props.title } rightLink="#" />
+				<Nav title={ this.props.title } prevLink={ this.props.prevLink } nextLink={ this.props.nextLink } />
 				<div className="container">
 					<Scoreboard users={ this.props.users } />
 					<div className="row">
