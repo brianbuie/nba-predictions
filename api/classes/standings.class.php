@@ -2,23 +2,22 @@
 
 class Standings {
 
-	public $standings;
+	public $teams;
 
 	function __construct($date){
 		$abbreviations = json_decode(file_get_contents('data/team-abbreviations.json'));
 		$results = $this->get_standings($date);
-		foreach($results->resultSets[4]->rowSet as $key => $team){
-		    $standings['east'][$key] = $this->map_headers($results->resultSets[4]->headers, $team);
-		    $standings['east'][$key]['RANK'] = $key + 1;
-		    $standings['east'][$key]['ABRV'] = $this->get_abbreviation($abbreviations, $team[0]);
+		foreach($results->resultSets as $set_key => $set){
+			// east and west standings are 4 and 5 in resultSet
+			if($set_key > 3 && $set_key < 6){
+				foreach($set->rowSet as $key => $team){
+					$standing = $this->map_headers($set->headers, $team);
+					$standing['RANK'] = $key + 1;
+					$standing['ABRV'] = $this->get_abbreviation($abbreviations, $team[0]);
+					$this->teams[] = $standing;
+				}
+			}
 		}
-		foreach($results->resultSets[5]->rowSet as $key => $team){
-		    $standings['west'][$key] = $this->map_headers($results->resultSets[5]->headers, $team);
-		    $standings['west'][$key]['RANK'] = $key + 1;
-		    $standings['west'][$key]['ABRV'] = $this->get_abbreviation($abbreviations, $team[0]);
-		}
-		// make west come before east
-		$this->standings = array_reverse($standings);
 	}
 
 	private function get_standings($date){
@@ -44,19 +43,19 @@ class Standings {
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_HTTPHEADER, array('Referer: http://stats.nba.com/scores/'));
 		if(curl_exec($curl) === false){
-		    echo 'Curl error: ' . curl_error($curl);
-		    die();
+			echo 'Curl error: ' . curl_error($curl);
+			die();
 		}
 		$curl_response = curl_exec($curl);
 		return json_decode($curl_response);
 	}
 
 	private function map_headers($headers, $array){
-	    $mapped = [];
-	    foreach($headers as $key => $val){
-	        $mapped[$val] = $array[$key];
-	    }
-	    return $mapped;
+		$mapped = [];
+		foreach($headers as $key => $val){
+			$mapped[$val] = $array[$key];
+		}
+		return $mapped;
 	}
 
 	private function get_abbreviation($abbreviations, $team_id){

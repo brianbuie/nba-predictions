@@ -8,7 +8,7 @@
 class Api{
 
 	// array of games to get data from
-	private $games;
+	private $game_states;
 
 	// what data to include in response
 	private $include;
@@ -30,7 +30,7 @@ class Api{
 
 	private function make_one_game($date_string){
 		$date = new Date($date_string);
-		$this->games[$date->format($date->selected_day, 'Y-m-d')] = new GameState($date->selected_day);
+		$this->game_states[$date->format($date->selected_day, 'Y-m-d')] = new GameState($date->selected_day);
 	}
 
 	private function make_games_historically($start_date, $number_of_days){
@@ -43,10 +43,10 @@ class Api{
 	}
 
 	private function make_data(){
-		foreach($this->games as $date => $game){
+		foreach($this->game_states as $date => $game){
 			$data['date'] = $date;
 			if($this->include == 'all' || $this->include == 'standings'){
-				$data['standings'] = $game->standings->standings;
+				$data['standings'] = $game->standings->teams;
 			}
 			if($this->include == 'all' || $this->include == 'users'){
 				$data['users'] = $game->users;

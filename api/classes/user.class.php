@@ -11,7 +11,7 @@ class User {
 		foreach($picks as $conference => $teams){
 			foreach($teams as $rank => $pick){
 				$pick['rank'] = $rank;
-				$this->picks[$conference][] = $pick;
+				$this->picks[] = $pick;
 			}
 		}
 		$images = json_decode(file_get_contents('data/images.json'), true);
@@ -21,12 +21,10 @@ class User {
 	}
 
 	public function set_pick_info($team_id, $values_array){
-		foreach($this->picks as $conference => $teams){
-			foreach($teams as $rank => $team){
-				if($team['team'] == $team_id){
-					foreach($values_array as $key => $val){
-						$this->picks[$conference][$rank][$key] = $val;
-					}
+		foreach($this->picks as $team_key => $team){
+			if($team['team_id'] == $team_id){
+				foreach($values_array as $value_key => $value){
+					$this->picks[$team_key][$value_key] = $value;
 				}
 			}
 		}
