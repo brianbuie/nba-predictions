@@ -1,7 +1,6 @@
 // dependencies
 import Api from '../Api/Api';
 import Layout from '../Layout/Layout';
-import Loading from '../Loading/Loading';
 import Moment from 'moment';
 import React, { Component } from 'react';
 // css
@@ -15,22 +14,7 @@ class App extends Component {
 
 	render() {
 		return (
-			<div>
-				{ this.state.loading ? <Loading /> : this.layout() }
-			</div>
-		);
-	}
-
-	layout() {
-		let date = new Moment(this.state.date);
-		return (
-			<Layout
-				title={ date.format('MMMM D, Y') }
-				standings={ this.state.standings }
-				users={ this.state.users }
-				prevLink={ () => { this.handleDateChange(-1) } }
-				nextLink={ () => { this.handleDateChange(1) } }
-			/>
+			<Layout {...this.state} />
 		);
 	}
 

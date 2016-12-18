@@ -4,14 +4,14 @@ class PickTable extends Component {
 
 	render() {
 		let picks = this.props.picks.map((pick, i) => {
-			let className = pick.placement['correct_%'] < 1 ? "txt-faded" : "";
+			let className = pick.placement['correct_pct'] < 1 ? "txt-faded" : "";
 			return (
 				<tr className={ className } key={ this.props.user + "-" + this.props.conferece + "-" + i }>
 					<td>
 						{ i + 1 }
 					</td>
 					<td>
-						{ pick.abrv }
+						{ pick.actual.ABRV }
 					</td>
 					<td className="border-left">
 						{ pick.wins }-{ (82 - pick.wins) }
@@ -20,10 +20,10 @@ class PickTable extends Component {
 						{ pick.w_pct.predicted }
 					</td>
 					<td className="border-left">
-						{ pick.actual.w }-{ pick.actual.l }
+						{ pick.actual.W }-{ pick.actual.L }
 					</td>
 					<td className="txt-italic">
-						 { pick.w_pct.actual }
+						 { pick.actual.W_PCT }
 					</td>
 					<td className="border-left txt-bold txt-positive">
 						{ pick.score }

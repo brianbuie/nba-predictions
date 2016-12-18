@@ -26,7 +26,9 @@ class Standings extends Component {
 	}
 
 	renderTeams(){
-		let teams = this.props.standings.map((team, i) => {
+		let teams = this.props.standings.filter( team => {
+			return team.CONFERENCE === this.props.conference;
+		}).map((team, i) => {
 			let className = i > 7 ? "txt-faded" : "";
 			return (
 				<tr className={ className } key={ team.ABRV }>

@@ -4,23 +4,33 @@ import React, { Component } from 'react';
 class Picks extends Component {
 
 	render() {
-		let users = this.props.users.map((user, i) => {
-			return (
-				<div className="row" key={user.name + "-picks"}>
-					<div className="col-xs-12">
-						<h5 className="txt-capitalize">
-							{ user.name }
-						</h5>
-						<h3 className="txt-positive spaced-out-md">
-							{ user.score }
-						</h3>
-					</div>
-					<PickTable conference="West" picks={ user.picks.west } user="user.name" />
-					<PickTable conference="East" picks={ user.picks.east } user="user.name" />
+		return (
+			<div className="row">
+				<div className="col-xs-12">
+					<h5 className="txt-capitalize">
+						{ this.props.user.name }
+					</h5>
+					<h3 className="txt-positive spaced-out-md">
+						{ this.props.user.score }
+					</h3>
 				</div>
-			);
-		})
-		return (<div>{ users }</div>);
+				<PickTable conference="West" picks={ this.filterPicks(this.props.user.picks, "West") }/>
+				<PickTable conference="East" picks={ this.filterPicks(this.props.user.picks, "East") }/>
+			</div>
+		);
+	}
+
+	filterPicks(picks, conference){
+		return picks.map( pick => {
+			pick.actual = this.props.standings.filter(team => {
+				return team.TEAM_ID === pick.team_id;
+			})[0];
+			return pick;
+		}).filter( pick => {
+			return pick.actual.CONFERENCE === conference;
+		}).sort( (a, b) => {
+			return a.RANK < b.RANK ? 1 : -1;
+		});
 	}
 
 }

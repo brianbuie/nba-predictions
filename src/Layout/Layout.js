@@ -1,4 +1,5 @@
 // dependencies
+import Loading from '../Loading/Loading';
 import Nav from '../Nav/Nav';
 import Picks from '../Picks/Picks';
 import React, { Component } from 'react';
@@ -12,23 +13,37 @@ class Layout extends Component {
 	render() {
 		return (
 			<div>
-				<Nav title={ this.props.title } prevLink={ this.props.prevLink } nextLink={ this.props.nextLink } />
+				{ this.props.loading ? <Loading /> : this.pageLayout() }
+			</div>
+		);
+	}
+
+	pageLayout(){
+		return (
+			<div>
+				<Nav { ...this.props }/>
 				<div className="container">
-					<Scoreboard users={ this.props.users } />
+					<Scoreboard { ...this.props }/>
 					<div className="row">
 						<Standings
 							conference="West"
-							standings={ this.props.standings.west }
+							{ ...this.props }
 						/>
 						<Standings
 							conference="East"
-							standings={ this.props.standings.east }
+							{ ...this.props }
 						/>
 					</div>
-					<Picks users={ this.props.users } />
+					{ this.userPicks() }
 				</div>
 			</div>
 		);
+	}
+
+	userPicks(){
+		return this.props.users.map( user => {
+			return( <Picks user={ user } standings={ this.props.standings } key={ user.name + "-picks" }/> );
+		})
 	}
 
 
