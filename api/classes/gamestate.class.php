@@ -40,22 +40,22 @@ class GameState {
 		$score = 0;
 		foreach($user->picks as $team){
 			// score both placement and win percentage for pick and get team info
-			$pick_details = $this->get_pick_details($team);
+			$pick_details = $this->set_pick_details($team);
 			// set the pick info
 			$user->set_pick_info($team['team_id'], $pick_details);
 			// add pick score to total score
-			$score += $pick_details['score'];
+			$score += $pick_details['score']['total'];
 		}
 		// set the user's total score in user object
 		$user->set_user_info('score', $score);
 	}
 
 	// scores one individual pick and gets team info, returns array of score and team info
-	private function get_pick_details($pick){
-		$actual = $this->team_actual($pick['team_id']);
-		$pick_info['placement'] = $this->score_placement($pick);
-		$pick_info['w_pct'] = $this->score_w_pct($pick);
-		$pick_info['score'] = $pick_info['placement']['score'] + $pick_info['w_pct']['score'];
+	private function set_pick_details($pick){
+		$pick_info['actual'] = $this->team_actual($pick['team_id']);
+		$pick_info['score']['placement'] = $this->score_placement($pick);
+		$pick_info['score']['w_pct'] = $this->score_w_pct($pick);
+		$pick_info['score']['total'] = $pick_info['score']['placement']['score'] + $pick_info['score']['w_pct']['score'];
 		// nested array
 		return $pick_info;
 	}
@@ -70,8 +70,8 @@ class GameState {
 		$score = round($correct * $this->placement_points);
 		$score += $correct == 1 ? $this->placement_bonus : 0;
 		return $score_info = [
-			'correct_pct' 	=> round($correct, 3),
-			'score' 		=> $score
+			'correct' 	=> round($correct, 3),
+			'score' 	=> $score
 		];
 	}
 
@@ -85,8 +85,8 @@ class GameState {
 		$score = round($correct * $this->w_pct_points);
 		$score += $correct == 1 ? $this->w_pct_bonus : 0;
 		return $score_info = [
-			'correct_pct' 	=> round($correct, 3),
-			'score' 		=> $score
+			'correct' 	=> round($correct, 3),
+			'score' 	=> $score
 		];
 	}
 
