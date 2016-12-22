@@ -21,12 +21,7 @@ class Picks extends Component {
 	}
 
 	filterPicks(picks, conference){
-		return picks.map( pick => {
-			pick.actual = this.props.standings.filter(team => {
-				return team.TEAM_ID === pick.team_id;
-			})[0];
-			return pick;
-		}).filter( pick => {
+		return picks.filter( pick => {
 			return pick.actual.CONFERENCE === conference;
 		}).sort( (a, b) => {
 			return a.RANK < b.RANK ? 1 : -1;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Ticker from '../Ticker/Ticker';
 
 class Standings extends Component {
 
@@ -33,7 +34,7 @@ class Standings extends Component {
 			return (
 				<tr className={ className } key={ team.ABRV }>
 					<td className="txt-right">
-						-
+						<Ticker value={ team.difference.RANK } inverted={ true }/>
 					</td>
 					<td className="txt-center">
 						{ i + 1 }

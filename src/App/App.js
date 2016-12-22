@@ -20,12 +20,13 @@ class App extends Component {
 
 	handleDateChange(delta){
 		let date = new Moment(this.state.date).add(delta, 'days');
-		this.fetchData( date.format('YYYY-MM-DD'));
+		this.fetchData(date.format('YYYY-MM-DD'));
 	}
 
 	fetchData(date){
 		this.setState({ loading: true });
-		let query = date ? '?date=' + date : "";
+		let query_date = date ? '&date=' + date : "";
+		let query = '?compare' + query_date;
 		Api.get(query, (data) => { 
 			this.setState( data[0] );
 			this.setState({ loading: false });

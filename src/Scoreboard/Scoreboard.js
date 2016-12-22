@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Ticker from '../Ticker/Ticker';
 // import FontAwesome from 'react-fontawesome';
 
 import './Scoreboard.css';
@@ -27,7 +28,7 @@ class Scoreboard extends Component {
 						{ user.score }
 					</h1>
 					<p className="txt-center">
-						-
+						<Ticker value={ user.difference.score } />
 					</p>
 				</div>
 			);

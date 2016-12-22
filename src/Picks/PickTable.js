@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import Ticker from '../Ticker/Ticker';
 
 class PickTable extends Component {
 
 	render() {
 		let picks = this.props.picks.map((pick, i) => {
-			let className = pick.placement['correct_pct'] < 1 ? "txt-faded" : "";
+			let className = pick.score.placement.correct < 1 ? "txt-faded" : "";
 			return (
 				<tr className={ className } key={ this.props.user + "-" + this.props.conferece + "-" + i }>
 					<td>
@@ -17,7 +18,7 @@ class PickTable extends Component {
 						{ pick.wins }-{ (82 - pick.wins) }
 					</td>
 					<td className="txt-italic">
-						{ pick.w_pct.predicted }
+						 -
 					</td>
 					<td className="border-left">
 						{ pick.actual.W }-{ pick.actual.L }
@@ -26,10 +27,10 @@ class PickTable extends Component {
 						 { pick.actual.W_PCT }
 					</td>
 					<td className="border-left txt-bold txt-positive">
-						{ pick.score }
+						{ pick.score.total }
 					</td>
 					<td>
-						-
+						<Ticker value={ pick.difference.total } />
 					</td>
 				</tr>
 			);
