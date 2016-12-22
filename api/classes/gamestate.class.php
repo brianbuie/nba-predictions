@@ -2,6 +2,7 @@
 
 class GameState {
 
+	public $date;
 	public $standings;
 	public $users;
 
@@ -12,6 +13,7 @@ class GameState {
 	private $w_pct_bonus = 15;
 
 	public function __construct($date){
+		$this->date = $date->format('Y-m-d');
 		$this->standings = new Standings($date);
 		$entries = json_decode(file_get_contents('data/entries.json'), true);
 		foreach($entries as $name => $files){
