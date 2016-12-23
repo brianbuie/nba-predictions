@@ -6,7 +6,7 @@ if($_SERVER['HTTP_HOST']=='localhost'){
 // Classes
 include('classes/api.class.php');
 include('classes/compare.class.php');
-include('classes/date.class.php');
+include('classes/customdate.class.php');
 include('classes/gamestate.class.php');
 include('classes/standings.class.php');
 include('classes/user.class.php');

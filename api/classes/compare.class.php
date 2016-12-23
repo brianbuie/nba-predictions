@@ -2,33 +2,52 @@
 
 class Compare {
 
-	public $baseline;
-	private $compare;
+	// baseline gamestate, differences will be injected into this
+	public $baseline_state;
 
-	function __construct($baseline, $compare = null){
-		$this->baseline = $baseline;
-		if(!$compare){
-			$new_date = new DateTime($this->baseline->date);
-			$new_date->modify('-1 day');
+	// gamestate to compare baseline to
+	private $compare_state;
+
+	// already instantiated gamestates, null will compare against nearest different day
+	function __construct($baseline_state, $compare_state = null){
+		$this->baseline_state = $baseline_state;
+
+		// if no compare gamestate given, create date object -1 day from baseline->date_string
+		if(!$compare_state){
+			$custom_compare_date = new CustomDate($this->baseline_state->date_string);
+			$custom_compare_date->modify('-1 day');
+			// if compare date isn't valid, exit and don't perform comparisons
+			// prevents comparison on season opener (day before season opener is last year's standings)
+			if(!$custom_compare_date->is_valid()){ return; }
 		}
-		$compare = $compare ? $compare : new GameState($new_date);
-		$this->set_differences($compare);
-		if(!$this->is_different()){
-			$new_date->modify('-1 day');
-			$this->set_differences(new GameState($new_date));
+
+		// $compare_state is $compare_state gamestate given or new gamestate from custom_compare_date
+		$compare_state = $compare_state ? $compare_state : new GameState($custom_compare_date);
+
+		// compare everything
+		$this->set_differences($compare_state);
+
+		// if baseline not different from compare, modify date -1 more day and try again
+		// this is necessary because if today's nba games haven't been played, there is no difference between today and yesterday
+		while(!$this->is_different() && $custom_compare_date->is_valid()){
+			$custom_compare_date->modify('-1 day');
+			if(!$custom_compare_date->is_valid()){ return; }
+			$this->set_differences(new GameState($custom_compare_date));
 		}
 	}
 
-	private function set_differences($compare){
-		$this->compare = $compare;
+	private function set_differences($compare_state){
+		// set this compare gamestate and then find difference between standings and users
+		$this->compare_state = $compare_state;
 		$this->set_team_difference();
 		$this->set_user_difference();
 	}
 
 	private function set_team_difference(){
-		foreach($this->baseline->standings->teams as $key => $team){
-			$this->baseline->standings->teams[$key]['difference'] = [
-				'date' => $this->compare->date,
+		foreach($this->baseline_state->standings->teams as $key => $team){
+			// compare various stats, put new array of differences in actual baseline gamestate
+			$this->baseline_state->standings->teams[$key]['difference'] = [
+				'date' => $this->compare_state->date_string,
 				'G' => $this->team_stat_difference($team['TEAM_ID'], 'G'),
 				'W' => $this->team_stat_difference($team['TEAM_ID'], 'W'),
 				'L' => $this->team_stat_difference($team['TEAM_ID'], 'L'),
@@ -39,44 +58,59 @@ class Compare {
 	}
 
 	private function set_user_difference(){
-		foreach($this->baseline->users as $key => $user){
-			$this->baseline->users[$key]->difference = [
-				'date' => $this->compare->date,
+		foreach($this->baseline_state->users as $key => $user){
+			// compare scores and put differences in baseline_state user object
+			$this->baseline_state->users[$key]->difference = [
+				'date' => $this->compare_state->date_string,
 				'score' => $this->user_stat_difference($user->name, 'score')
 			];
 			foreach($user->picks as $pick_key => $team){
-				$this->baseline->users[$key]->picks[$pick_key]['difference'] = $this->user_pick_difference($user->name, $team['team_id']);
+				// put pick difference in actual baseline_state user's picks
+				$this->baseline_state->users[$key]->picks[$pick_key]['difference'] = $this->user_pick_difference($user->name, $team['team_id']);
 			}
 		}
 	}
 
-	private function user_stat_difference($username, $stat){ 
-		$baseline_stat = $this->get_user_stat($username, $this->baseline, $stat); 
-		$compare_stat = $this->get_user_stat($username, $this->compare, $stat); 
-		return $baseline_stat - $compare_stat; 
+	private function user_stat_difference($username, $stat){
+		// difference between same stat for same user in both gamestates
+		$baseline_state_stat = $this->get_user_stat($username, $this->baseline_state, $stat); 
+		$compare_state_stat = $this->get_user_stat($username, $this->compare_state, $stat); 
+		return $baseline_state_stat - $compare_state_stat; 
 	}
 
-	private function get_user_stat($username, $game, $stat){ 
-		foreach($game->users as $user){ 
+	private function get_user_stat($username, $gamestate, $stat){
+		// return stat for given user in given gamestate
+		foreach($gamestate->users as $user){ 
 			if($user->name == $username){ 
 				return $user->$stat; 
 			} 
 		} 
 	}
 
+	// get difference for team with given team_id picked by user with given username
 	private function user_pick_difference($username, $team_id){
-		$baseline_pick = $this->get_user_pick($username, $this->baseline, $team_id);
-		$compare_pick = $this->get_user_pick($username, $this->compare, $team_id);
+		// get the pick in baseline_state and the compare_state
+		$baseline_state_pick = $this->get_user_pick($username, $this->baseline_state, $team_id);
+		$compare_state_pick = $this->get_user_pick($username, $this->compare_state, $team_id);
+		// difference array mimics score array in structure
 		$difference = [
-			'placement' => $baseline_pick["score"]["placement"]["score"] - $compare_pick["score"]["placement"]["score"],
-			'w_pct' => $baseline_pick["score"]["w_pct"]["score"] - $compare_pick["score"]["w_pct"]["score"],
-			'total' => $baseline_pick["score"]["total"]- $compare_pick["score"]["total"]
+			'date' => $this->compare_state->date_string,
+			'placement' => [
+				'correct' => $baseline_state_pick["score"]["placement"]["correct"] - $compare_state_pick["score"]["placement"]["correct"],
+				'score' => $baseline_state_pick["score"]["placement"]["score"] - $compare_state_pick["score"]["placement"]["score"]
+			],
+			'w_pct' => [
+				'correct' => $baseline_state_pick["score"]["w_pct"]["correct"] - $compare_state_pick["score"]["w_pct"]["correct"],
+				'score' => $baseline_state_pick["score"]["w_pct"]["score"] - $compare_state_pick["score"]["w_pct"]["score"]
+			],
+			'total' => $baseline_state_pick["score"]["total"]- $compare_state_pick["score"]["total"]
 		];
 		return $difference;
 	}
 
-	private function get_user_pick($username, $game, $team_id){
-		$picks = $this->get_user_stat($username, $game, 'picks');
+	private function get_user_pick($username, $gamestate, $team_id){
+		// return full pick details for given team_id in given user's picks in given gamestate
+		$picks = $this->get_user_stat($username, $gamestate, 'picks');
 		foreach($picks as $key => $team){
 			if($team['team_id'] == $team_id){
 				return $team;
@@ -84,14 +118,16 @@ class Compare {
 		}
 	}
 
-	private function team_stat_difference($team_id, $stat){ 
-		$baseline_stat = $this->get_team_stat($team_id, $this->baseline, $stat); 
-		$compare_stat = $this->get_team_stat($team_id, $this->compare, $stat); 
-		return $baseline_stat - $compare_stat; 
+	private function team_stat_difference($team_id, $stat){
+		// difference between same stat in both gamestates
+		$baseline_state_stat = $this->get_team_stat($team_id, $this->baseline_state, $stat); 
+		$compare_state_stat = $this->get_team_stat($team_id, $this->compare_state, $stat); 
+		return $baseline_state_stat - $compare_state_stat; 
 	}
 
-	private function get_team_stat($team_id, $game_state, $stat){ 
-		foreach($game_state->standings->teams as $team){
+	private function get_team_stat($team_id, $gamestate, $stat){
+		// return stat for team in given gamestate
+		foreach($gamestate->standings->teams as $team){
 			if($team['TEAM_ID'] == $team_id){ 
 				return $team[$stat]; 
 			}
@@ -99,8 +135,10 @@ class Compare {
 	}
 
 	private function is_different(){
+		// add up the difference in all games played for each team
+		// returns falsey (0) if every team has played the same amount of games in $baseline_state and $compare_state
 		$total_different_games = 0;
-		foreach($this->baseline->standings->teams as $team){
+		foreach($this->baseline_state->standings->teams as $team){
 			$total_different_games += $team['difference']['G'];
 		}
 		return $total_different_games;
