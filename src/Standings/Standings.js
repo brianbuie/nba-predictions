@@ -18,7 +18,7 @@ class Standings extends Component {
 							</tr>
 						</thead>
 						<tbody>
-							{ this.renderTeams() }
+							{this.renderTeams()}
 						</tbody>
 					</table>
 				</div>
@@ -32,21 +32,21 @@ class Standings extends Component {
 		}).map((team, i) => {
 			let className = i > 7 ? "txt-faded" : "";
 			return (
-				<tr className={ className } key={ team.ABRV }>
+				<tr className={className} key={team.ABRV}>
 					<td className="txt-right">
-						<Ticker value={ team.difference.RANK } inverted={ true }/>
+						<Ticker value={team.difference.RANK} inverted={true}/>
 					</td>
 					<td className="txt-center">
-						{ i + 1 }
+						{i + 1}
 					</td>
 					<td>
-						{ team.TEAM }
+						{team.TEAM}
 					</td>
 					<td className="txt-center">
-						{ team.W }-{ team.L }
+						{team.W}-{team.L}
 					</td>
 					<td className="txt-center">
-						<i>{ team.W_PCT }</i>
+						<i>{team.W_PCT}</i>
 					</td>
 				</tr>
 			);

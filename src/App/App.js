@@ -16,8 +16,8 @@ class App extends Component {
 	render() {
 		return (
 			<div>
-				{ this.state.loading ? <Loading /> : null }
-				{ this.state.standings ? <Layout {...this.state} dateChange={ (delta) => { this.handleDateChange(delta) } }/> : null }
+				{this.state.loading ? <Loading /> : null}
+				{this.state.standings ? <Layout {...this.state} dateChange={(delta) => { this.handleDateChange(delta) }}/> : null}
 			</div>
 		);
 	}

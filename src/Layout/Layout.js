@@ -12,25 +12,28 @@ class Layout extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			activeUser: props.users[0]
+			activeUsername: props.users[0].name
 		}
 	}
 
 	render() {
 		return (
 			<div>
-				<Nav { ...this.props }/>
+				<Nav {...this.props}/>
 				<div className="container">
-					<Scoreboard { ...this.props } {...this.state} handleUserSelect={ (username) => { this.handleUserSelect(username) } }/>
-					<Picks user={ this.state.activeUser } standings={ this.props.standings } />
+					<Scoreboard {...this.props} {...this.state} handleUserSelect={(username) => {this.handleUserSelect(username)}}/>
+					<Picks 
+						user={this.props.users.filter(user => {return user.name === this.state.activeUsername})[0]} 
+						standings={this.props.standings} 
+					/>
 					<div className="row">
 						<Standings
 							conference="West"
-							{ ...this.props }
+							{...this.props}
 						/>
 						<Standings
 							conference="East"
-							{ ...this.props }
+							{...this.props}
 						/>
 					</div>
 				</div>
@@ -39,8 +42,7 @@ class Layout extends Component {
 	}
 
 	handleUserSelect(username){
-		let user = this.props.users.filter( user => { return user.name === username; });
-		this.setState({ activeUser: user[0] });
+		this.setState({activeUsername: username});
 	}
 
 

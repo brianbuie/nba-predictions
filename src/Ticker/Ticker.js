@@ -5,7 +5,7 @@ class Ticker extends Component {
 	render() {
 		return (
 			<span>
-				{ this.createMarkup() }
+				{this.createMarkup()}
 			</span>
 		);
 	}
@@ -15,15 +15,15 @@ class Ticker extends Component {
 		if(this.props.inverted){
 			value *= -1;
 		}
-		if( value > 0 ){
-			return( <span className="txt-positive"><i className="fa fa-caret-up"></i> { value } </span> );
+		if(value > 0){
+			return(<span className="txt-positive"><i className="fa fa-caret-up"></i> {value} </span>);
 		}
-		if( value < 0 ){
+		if(value < 0){
 			value *= -1; 
-			return( <span className="txt-negative"><i className="fa fa-caret-down"></i> { value } </span> ); 
+			return(<span className="txt-negative"><i className="fa fa-caret-down"></i> {value} </span>); 
 		}
-		if( value === 0 ){
-			return( <span className="txt-faded"> - </span> );
+		if(value === 0){
+			return(<span className="txt-faded"> - </span>);
 		}
 	}
 

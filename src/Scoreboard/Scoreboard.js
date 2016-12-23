@@ -9,7 +9,7 @@ class Scoreboard extends Component {
 	render() {
 		return (
 			<div className="row no-padding-bottom">
-				{ this.renderUsers() }
+				{this.renderUsers()}
 			</div>
 		);
 	}
@@ -20,30 +20,26 @@ class Scoreboard extends Component {
 				<div 
 					className="col-xs-3"
 					key={user.name + "-score"} 
-					onClick={ () => { this.props.handleUserSelect(user.name) }}
+					onClick={() => { this.props.handleUserSelect(user.name) }}
 				>
-					<div className={ this.props.activeUser.name === user.name ? "user-container active" : "user-container" }>
+					<div className={this.props.activeUsername === user.name ? "user-container active" : "user-container" }>
 						<div className="user-image">
-							{ this.renderImage(user.img) }
+							{user.img ? <img src={user.img} alt="profile" /> : null}
 						</div>
 						<h5 className="txt-capitalize txt-faded txt-center">
-							{ user.name }
+							{user.name}
 						</h5>
 						<h1 className="txt-positive txt-center spaced-out-sm">
-							{ user.score }
+							{user.score}
 						</h1>
 						<p className="txt-center">
-							<Ticker value={ user.difference.score } />
+							<Ticker value={user.difference.score} />
 						</p>
 					</div>
 				</div>
 			);
 		});
 		return users;
-	}
-
-	renderImage(img){
-		return img ? <img src={ img } alt="profile" /> : null;
 	}
 }
 

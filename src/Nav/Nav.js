@@ -10,13 +10,17 @@ class Nav extends Component {
 		return (
 			<nav>
 				<div className="nav-link-container">
-					{ this.arrow('left', () => {this.props.dateChange(-1)}) }
+					<a className="nav-link nav-left" onClick={() => {this.props.dateChange(-1)}}>
+						<FontAwesome name="arrow-left" />
+					</a>
 				</div>
 				<h4 className="title">
-					{ this.title() }
+					{this.title()}
 				</h4>
 				<div className="nav-link-container">
-					{ this.arrow('right', () => {this.props.dateChange(1)}) }
+					<a className="nav-link nav-right" onClick={() => {this.props.dateChange(1)}}>
+						<FontAwesome name="arrow-right" />
+					</a>
 				</div>
 			</nav>
 		);
@@ -25,16 +29,6 @@ class Nav extends Component {
 	title(){
 		let title = new Moment(this.props.date);
 		return title.format('MMMM D, YYYY');
-	}
-
-	arrow(direction, action) {
-		if(action){
-			return (
-				<a className={"nav-link nav-" + direction } onClick={ action }>
-					<FontAwesome name={"arrow-" + direction } />
-				</a>
-			);
-		}
 	}
 }
 
