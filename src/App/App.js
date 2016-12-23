@@ -1,6 +1,7 @@
 // dependencies
 import Api from '../Api/Api';
 import Layout from '../Layout/Layout';
+import Loading from '../Loading/Loading';
 import Moment from 'moment';
 import React, { Component } from 'react';
 // css
@@ -14,7 +15,10 @@ class App extends Component {
 
 	render() {
 		return (
-			<Layout {...this.state} dateChange={ (delta) => { this.handleDateChange(delta) } }/>
+			<div>
+				{ this.state.loading ? <Loading /> : null }
+				{ this.state.standings ? <Layout {...this.state} dateChange={ (delta) => { this.handleDateChange(delta) } }/> : null }
+			</div>
 		);
 	}
 

@@ -1,5 +1,4 @@
 // dependencies
-import Loading from '../Loading/Loading';
 import Nav from '../Nav/Nav';
 import Picks from '../Picks/Picks';
 import React, { Component } from 'react';
@@ -10,21 +9,20 @@ import './Layout.css';
 
 class Layout extends Component {
 
-	render() {
-		return (
-			<div>
-				{ this.props.loading ? <Loading /> : null }
-				{ this.props.standings ? this.pageLayout() : null }
-			</div>
-		);
+	constructor(props){
+		super(props);
+		this.state = {
+			activeUser: props.users[0]
+		}
 	}
 
-	pageLayout(){
+	render() {
 		return (
 			<div>
 				<Nav { ...this.props }/>
 				<div className="container">
-					<Scoreboard { ...this.props }/>
+					<Scoreboard { ...this.props } {...this.state} handleUserSelect={ (username) => { this.handleUserSelect(username) } }/>
+					<Picks user={ this.state.activeUser } standings={ this.props.standings } />
 					<div className="row">
 						<Standings
 							conference="West"
@@ -35,16 +33,14 @@ class Layout extends Component {
 							{ ...this.props }
 						/>
 					</div>
-					{ this.userPicks() }
 				</div>
 			</div>
 		);
 	}
 
-	userPicks(){
-		return this.props.users.map( user => {
-			return( <Picks user={ user } standings={ this.props.standings } key={ user.name + "-picks" }/> );
-		})
+	handleUserSelect(username){
+		let user = this.props.users.filter( user => { return user.name === username; });
+		this.setState({ activeUser: user[0] });
 	}
 
 
