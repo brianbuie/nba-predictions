@@ -43,7 +43,15 @@ class App extends Component {
 		let query = '?compare' + query_date;
 		Api.get(query, (data) => { 
 			this.setState( data[0] );
-			this.setState({ loading: false });
+			this.fetchAllScores( () => { this.setState({ loading: false }) } );
+		});
+	}
+
+	fetchAllScores(callback){
+		if(this.state.allScores){ callback(); }
+		Api.get( '?include=scores&days=1000', (data) => {
+			this.setState({ allScores: data });
+			callback();
 		});
 	}
 

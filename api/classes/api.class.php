@@ -57,9 +57,14 @@ class Api{
 	}
 
 	public function respond(){
-		// itterate over game_states and create data object of included data
-		$this->make_data();
-		// return to index.php to do with it what it will (echo JSON)
+		// make data separated by gamestates
+		if( in_array( $this->include, ["all", "standings", "users"] )){
+			$this->make_game_data($this->include);
+		}
+		// make graph friendly score data separated by user
+		if ($this->include == "scores"){
+			$this->make_score_data();
+		}
 		return $this->data;
 	}
 
@@ -74,24 +79,34 @@ class Api{
 		return $games;
 	}
 
-	private function make_data(){
+	// make data separated by date
+	private function make_game_data($include){
 		foreach($this->game_states as $date => $game){
 			$data['date'] = $game->date_string;
 			// include standings
-			if($this->include == 'all' || $this->include == 'standings'){
+			if(in_array($include, ['all', 'standings'])){
 				$data['standings'] = $game->standings->teams;
 			}
 			// include users
-			if($this->include == 'all' || $this->include == 'users'){
+			if(in_array($include, ['all', 'standings'])){
 				$data['users'] = $game->users;
 			}
-			// ONLY include scores (does not include comparison)
-			if($this->include == 'scores'){
-				foreach($game->users as $user){
-					$data['scores'][$user->name] = $user->score;
-				}
-			}
+			// push game's data to data object
 			$this->data[] = $data;
 		}
+	}
+
+	// make data separated by user instead of by date
+	private function make_score_data(){
+		foreach($this->game_states as $key => $game){
+			foreach($game->users as $user){
+				// push user's score to their key in data array
+				$data[$user->name][] = [
+					'x' => $game->date_string,
+					'y' => $user->score
+				];
+			}
+		}
+		$this->data = $data;
 	}
 }

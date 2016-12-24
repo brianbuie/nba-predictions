@@ -4,6 +4,7 @@ import Nav from '../Nav/Nav';
 import Picks from '../Picks/Picks';
 import React, { Component } from 'react';
 import Scoreboard from '../Scoreboard/Scoreboard';
+import ScoreGraph from '../ScoreGraph/ScoreGraph';
 import Standings from '../Standings/Standings';
 // css
 import './Layout.css';
@@ -22,6 +23,7 @@ class Layout extends Component {
 			<div>
 				<Nav { ...this.props }/>
 				<div className="container">
+					{ this.props.allScores ? <ScoreGraph { ...this.props } { ...this.state } /> : null }
 					<Scoreboard users={ this.props.users } { ...this.state } handleUserSelect={ (username) => {this.handleUserSelect(username)} }/>
 					<Picks 
 						user={ this.props.users.filter( user => {return user.name === this.state.activeUsername})[0] } 
