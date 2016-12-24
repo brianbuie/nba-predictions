@@ -1,4 +1,5 @@
 // dependencies
+import ImageSelect from '../ImageSelect/ImageSelect';
 import Nav from '../Nav/Nav';
 import Picks from '../Picks/Picks';
 import React, { Component } from 'react';
@@ -37,6 +38,7 @@ class Layout extends Component {
 							standings={ this.props.standings }
 						/>
 					</div>
+					<ImageSelect {...this.props} />
 				</div>
 			</div>
 		);

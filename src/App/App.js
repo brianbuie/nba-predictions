@@ -17,7 +17,13 @@ class App extends Component {
 		return (
 			<div>
 				{ this.state.loading ? <Loading /> : null }
-				{ this.state.standings ? <Layout { ...this.state } dateChange={(delta) => { this.handleDateChange(delta) } }/> : null }
+				{ this.state.standings ? 
+					<Layout 
+						{ ...this.state } 
+						dateChange={(delta) => { this.handleDateChange(delta) } }
+						handleImageSelect={ () => { this.handleImageSelect() } }
+					/> 
+				: null }
 			</div>
 		);
 	}
@@ -25,6 +31,10 @@ class App extends Component {
 	handleDateChange(delta){
 		let date = new Moment(this.state.date).add(delta, 'days');
 		this.fetchData(date.format('YYYY-MM-DD'));
+	}
+
+	handleImageSelect(){
+		console.log('image submitted');
 	}
 
 	fetchData(date){
