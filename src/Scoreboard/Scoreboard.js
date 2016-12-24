@@ -26,9 +26,12 @@ class Scoreboard extends Component {
 					<div>
 						<div 
 							className="user-image"
-							style={{ transform: isActiveUser ? "scale(1.1)" : "" }}
+							style={{ 
+								transform: isActiveUser ? "scale(1.1)" : "",
+								backgroundImage: user.img ? 'url(' + user.img + ')' : null
+							}}
 						>
-							{user.img ? <img src={user.img} alt="profile" /> : null}
+							
 						</div>
 						<h5 className={ isActiveUser ? "txt-capitalize txt-center" : "txt-capitalize txt-faded txt-center" }>
 							{user.name}
