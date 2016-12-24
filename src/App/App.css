@@ -8,12 +8,12 @@ th{
 	padding-top: 0.5rem;
 	padding-bottom: 0.5rem;
 }
-.border-left{
-	border-left: 1px solid grey;
-}
 .table > tbody > tr > td {
     vertical-align: middle;
 }
 .table-sm{
 	font-size: 0.9rem;
+}
+.active{
+	background: rgba(45, 62, 89, 0.5);
 }

@@ -18,11 +18,11 @@ class Scoreboard extends Component {
 		let users = this.props.users.map((user, i) => {
 			return (
 				<div 
-					className="col-xs-3"
+					className={this.props.activeUsername === user.name ? "col-xs-3 user-container active" : "col-xs-3 user-container" }
 					key={user.name + "-score"} 
 					onClick={() => { this.props.handleUserSelect(user.name) }}
 				>
-					<div className={this.props.activeUsername === user.name ? "user-container active" : "user-container" }>
+					<div>
 						<div className="user-image">
 							{user.img ? <img src={user.img} alt="profile" /> : null}
 						</div>

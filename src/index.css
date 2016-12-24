@@ -24,7 +24,7 @@ a:hover{
 /* Utilities */
 /* TEXT */
 .txt-faded{
-	color: #888;
+	color: rgba(255, 255, 255, 0.3);
 }
 .txt-capitalize{
 	text-transform: capitalize;
@@ -62,4 +62,11 @@ a:hover{
 .spaced-out-lg{
 	margin-top: 2rem;
 	margin-bottom: 2rem;
+}
+/* BACKGROUNDS */
+.bkg-positive{
+	background: rgba(67, 186, 112, 0.1);
+}
+.bkg-negative{
+	background: rgba(204, 71, 71, 0.1);
 }

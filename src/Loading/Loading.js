@@ -9,7 +9,7 @@ class Loading extends Component {
 	render() {
 		return (
 			<div className="loading">
-				<img src={icon} className="icon fast-spin" role="presentation" />
+				<img src={ icon } className="icon fast-spin" role="presentation" />
 			</div>
 		);
 	}

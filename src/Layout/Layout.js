@@ -19,21 +19,22 @@ class Layout extends Component {
 	render() {
 		return (
 			<div>
-				<Nav {...this.props}/>
+				<Nav { ...this.props }/>
 				<div className="container">
-					<Scoreboard {...this.props} {...this.state} handleUserSelect={(username) => {this.handleUserSelect(username)}}/>
+					<Scoreboard users={ this.props.users } { ...this.state } handleUserSelect={ (username) => {this.handleUserSelect(username)} }/>
 					<Picks 
-						user={this.props.users.filter(user => {return user.name === this.state.activeUsername})[0]} 
-						standings={this.props.standings} 
+						user={ this.props.users.filter( user => {return user.name === this.state.activeUsername})[0] } 
+						standings={ this.props.standings } 
 					/>
 					<div className="row">
+						<h3 className="spaced-out-lg">NBA Standings</h3>
 						<Standings
 							conference="West"
-							{...this.props}
+							standings={ this.props.standings }
 						/>
 						<Standings
 							conference="East"
-							{...this.props}
+							standings={ this.props.standings }
 						/>
 					</div>
 				</div>
@@ -44,8 +45,6 @@ class Layout extends Component {
 	handleUserSelect(username){
 		this.setState({activeUsername: username});
 	}
-
-
 }
 
 export default Layout;
