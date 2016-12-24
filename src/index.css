@@ -5,11 +5,19 @@ body {
 	margin: 0;
 	padding: 0;
 	background-color: rgb(25, 36, 53);
-	color: #ddd;
+	color: rgba(255, 255, 255, 0.7);
 	text-align: center;
+	font-family: 'Open Sans', sans-serif;
 }
 h1, h2, h3, h4, h5{
 	margin: 0;
+}
+h2, h3, h4, h5{
+	font-family: 'Trocchi', sans-serif;
+	font-style: italic;
+}
+h1{
+	font-family: 'Patua One', sans-serif;
 }
 a{
 	color: rgb(255, 130, 46) !important;
