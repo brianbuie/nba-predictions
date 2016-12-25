@@ -102,11 +102,23 @@ class Api{
 			foreach($game->users as $user){
 				// push user's score to their key in data array
 				$data[$user->name][] = [
-					'x' => $game->date_string,
+					'label' => $game->date_string,
 					'y' => $user->score
 				];
 			}
 		}
-		$this->data = $data;
+		// reformat data into array
+		foreach($data as $username => $scores){
+			$reversed_scores = array_reverse($scores);
+			foreach($reversed_scores as $key => $score_info){
+				$score_info['x'] = $key;
+				$reversed_scores[$key] = $score_info;
+			}
+			$array_data[] = [
+				'label' => $username,
+				'data' => $reversed_scores
+			];
+		}
+		$this->data = $array_data;
 	}
 }
