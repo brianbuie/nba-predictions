@@ -15,7 +15,7 @@ class Api{
 	protected $game_states;
 
 	// what part of the game_states to include in data
-	private $include;
+	protected $include;
 
 	// data to return in response
 	protected $data;
@@ -26,6 +26,7 @@ class Api{
 		$start_date_string = isset($get['date']) ? $get['date'] : 'now';
 
 		// include users, standings, scores, or all if not specified
+		// cascades down to specify what to include in teamrecords child class
 		$this->include = isset($get['include']) ? $get['include'] : 'all';
 
 		// number of gamestates to create, 1 if not specified
