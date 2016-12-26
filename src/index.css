@@ -71,6 +71,13 @@ a:hover{
 	margin-top: 2rem;
 	margin-bottom: 2rem;
 }
+.no-padding{
+	padding: 0;
+}
+.no-padding-vertical{
+	padding-top: 0;
+	padding-bottom: 0;
+}
 /* BACKGROUNDS */
 .bkg-positive{
 	background: rgba(67, 186, 112, 0.1);
