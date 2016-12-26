@@ -17,12 +17,13 @@ class ScoreGraph extends Component {
 	createChart(){
 		return (<Line 
 			data={{
-				labels: this.props.allScores[0].data.map( date => { return date.label; }),
+				labels: this.props.allScores[0].data.map( entry => { return entry.date; }),
 				datasets: this.props.allScores.map( user => {
 					return {
-						borderColor: this.props.userColors[user.label],
-						label: user.label,
-						data: user.data.map( entry => { return entry.y; }),
+						borderWidth: 2,
+						borderColor: this.props.userColors[user.name],
+						label: user.name,
+						data: user.data.map( entry => { return entry.score; }),
 						fill: false,
 						backgroundColor: null,
 						pointRadius: 0,
@@ -31,7 +32,10 @@ class ScoreGraph extends Component {
 			}} 
 			options={{
 				responsive: true,
-				onClick: (e) => { console.log(e); },
+				hover: {
+					intersect: false,
+					mode: "x",
+				},
 				legend: {
 					display: false,
 				},
