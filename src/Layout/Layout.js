@@ -14,7 +14,8 @@ class Layout extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			activeUsername: props.users[0].name
+			activeUsername: props.users[0].name,
+			userColors: this.calculateUserColors(props.users[0].name)
 		}
 	}
 
@@ -48,6 +49,20 @@ class Layout extends Component {
 
 	handleUserSelect(username){
 		this.setState({activeUsername: username});
+		this.setState({userColors: this.calculateUserColors(username) });
+	}
+
+	calculateUserColors(activeUsername){
+		const alphaIncrement = .9 / this.props.users.length;
+		const baseColor = "rgba(62, 93, 144, ";
+		let userColors = {};
+		this.props.users.map( (user, i) => {
+			let alpha = 1 - (alphaIncrement * i);
+			userColors[user.name] = baseColor + alpha + ")";
+			return null;
+		});
+		userColors[activeUsername] = "rgba(255, 130, 46, 1)";
+		return userColors;
 	}
 }
 

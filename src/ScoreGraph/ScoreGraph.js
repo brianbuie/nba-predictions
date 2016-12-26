@@ -20,7 +20,7 @@ class ScoreGraph extends Component {
 				labels: this.props.allScores[0].data.map( date => { return date.label; }),
 				datasets: this.props.allScores.map( user => {
 					return {
-						borderColor: '#fff',
+						borderColor: this.props.userColors[user.label],
 						label: user.label,
 						data: user.data.map( entry => { return entry.y; }),
 						fill: false,

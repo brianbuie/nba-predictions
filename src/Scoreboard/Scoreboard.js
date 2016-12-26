@@ -23,8 +23,8 @@ class Scoreboard extends Component {
 					key={user.name + "-score"} 
 					onClick={() => { this.props.handleUserSelect(user.name) }}
 				>
-					<div>
-						<div 
+					<div style={{ borderTop: "7px solid " + this.props.userColors[user.name] }}>
+						<div
 							className="user-image"
 							style={{ 
 								transform: isActiveUser ? "scale(1.1)" : "",
