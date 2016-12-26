@@ -40,7 +40,7 @@ class App extends Component {
 	fetchData(date){
 		this.setState({ loading: true });
 		let query_date = date ? '&date=' + date : "";
-		let query = '?compare' + query_date;
+		let query = '?type=compare' + query_date;
 		Api.get(query, (data) => { 
 			this.setState( data[0] );
 			this.fetchAllScores( () => { this.setState({ loading: false }) } );
@@ -49,7 +49,7 @@ class App extends Component {
 
 	fetchAllScores(callback){
 		if(this.state.allScores){ callback(); }
-		Api.get( '?include=scores&days=1000', (data) => {
+		Api.get( '?type=userscores&days=1000', (data) => {
 			this.setState({ allScores: data });
 			callback();
 		});

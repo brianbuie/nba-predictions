@@ -1,17 +1,29 @@
 <?php
 
-class Compare {
+// Api called when:
+// $_GET['type'] = 'compare'
+
+// UNIQUE PARAMETERS
+// ?compare_date = use a specific comparison date
+
+class Compare extends Api{
 
 	// baseline gamestate, differences will be injected into this
-	public $baseline_state;
+	private $baseline_state;
 
 	// gamestate to compare baseline to
 	private $compare_state;
 
-	// already instantiated gamestates, null will compare against nearest different day
-	function __construct($baseline_state, $compare_state = null){
-		$this->baseline_state = $baseline_state;
-
+	function __construct($get){
+		parent::__construct($get);
+		$this->baseline_state = $this->game_states[0];
+		$compare_state = null;
+		if(isset($get['compare-date'])){
+			$compare_state = new GameState(new CustomDate($get['compare-date']));
+		}
+		if(isset($get['days'])){
+			$compare_state = end($this->game_states);
+		}
 		// if no compare gamestate given, create date object -1 day from baseline->date_string
 		if(!$compare_state){
 			$custom_compare_date = new CustomDate($this->baseline_state->date_string);
@@ -20,20 +32,20 @@ class Compare {
 			// prevents comparison on season opener (day before season opener is last year's standings)
 			if(!$custom_compare_date->is_valid()){ return; }
 		}
-
 		// $compare_state is $compare_state gamestate given or new gamestate from custom_compare_date
 		$compare_state = $compare_state ? $compare_state : new GameState($custom_compare_date);
-
 		// compare everything
 		$this->set_differences($compare_state);
-
-		// if baseline not different from compare, modify date -1 more day and try again
+		// if baseline is not different from compare, modify date -1 more day and try again
 		// this is necessary because if today's nba games haven't been played, there is no difference between today and yesterday
 		while(!$this->is_different() && $custom_compare_date->is_valid()){
 			$custom_compare_date->modify('-1 day');
 			if(!$custom_compare_date->is_valid()){ return; }
 			$this->set_differences(new GameState($custom_compare_date));
 		}
+		// set game_state to array with one value of baseline_state
+		// allows for parent method of making data to be valid (custom includes)
+		$this->game_states = [$this->baseline_state];
 	}
 
 	private function set_differences($compare_state){
