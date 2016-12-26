@@ -6,18 +6,24 @@ class Standings extends Component {
 
 	render() {
 		return (
-			<div className="col-md-6">
+			<div className="col-md-3">
+				<div className="conference-select-container">
+					<div 
+						className={ (this.props.activeConference === "West" ? "active" : null) + " conference-select" }
+						onClick={ () => { this.props.handleConferenceChange('West') }}
+					>
+						West
+					</div>
+					<div 
+						className={ (this.props.activeConference === "East" ? "active" : null) + " conference-select" }
+						onClick={ () => { this.props.handleConferenceChange('East') }}
+					>
+						East
+					</div>
+				</div>
 				<div className="table-responsive">
-					<table className="table table-sm standings-table spaced-out-md">
-						<thead>
-							<tr>
-								<th className="txt-center" style={{ width: "10%" }}> Rank </th>
-								<th style={{ width: "10%" }}></th>
-								<th className="txt-capitalize">{ this.props.conference }</th>
-								<th className="txt-center" style={{ width: "20%" }}> Record </th>
-								<th style={{ width: "10%" }}></th>
-							</tr>
-						</thead>
+					<table className="table table-sm standings-table">
+						<thead></thead>
 						<tbody>
 							{ this.renderTeams() }
 						</tbody>
@@ -29,21 +35,23 @@ class Standings extends Component {
 
 	renderTeams(){
 		let teams = this.props.standings.filter( team => {
-			return team.CONFERENCE === this.props.conference;
+			return team.CONFERENCE === this.props.activeConference;
 		}).map((team, i) => {
 			let className = i > 7 ? "txt-faded" : "";
 			if(team.difference.RANK < 0){ className += " bkg-positive"; }
 			if(team.difference.RANK > 0){ className += " bkg-negative"; }
 			return (
-				<tr className={ className } key={ team.ABRV }>
-					<td className="txt-center">
-						{ team.RANK }
-					</td>
+				<tr 
+					className={ className }
+					key={ team.ABRV }
+					style={{ borderRight: "3px solid " + this.props.teamColors[team.ABRV] }}
+					onClick={ () => { this.props.handleTeamChange(team.ABRV) }}
+				>
 					<td className="txt-center">
 						<Ticker value={ team.difference.RANK } inverted={ true }/>
 					</td>
 					<td>
-						{ team.TEAM }
+						{ team.ABRV }
 					</td>
 					<td className="txt-center">
 						{ team.W }-{ team.L }

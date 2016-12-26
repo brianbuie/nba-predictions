@@ -13,9 +13,14 @@ class Layout extends Component {
 
 	constructor(props){
 		super(props);
+		let teams = props.standings.filter( team => { return team.CONFERENCE === "West" });
+		let activeTeam = teams[0].ABRV;
 		this.state = {
 			activeUsername: props.users[0].name,
-			userColors: this.calculateUserColors(props.users[0].name)
+			userColors: this.calculateColors(props.users, 'name', props.users[0].name),
+			activeConference: "West",
+			activeTeam: activeTeam,
+			teamColors: this.calculateColors(teams, 'ABRV', activeTeam)
 		}
 	}
 
@@ -31,38 +36,55 @@ class Layout extends Component {
 						standings={ this.props.standings } 
 					/>
 					<div className="row">
-						<h3 className="spaced-out-lg">NBA Standings</h3>
-						<Standings
-							conference="West"
-							standings={ this.props.standings }
-						/>
-						<Standings
-							conference="East"
-							standings={ this.props.standings }
+						<Standings 
+							{ ...this.props } 
+							{ ...this.state } 
+							handleTeamChange={ (abrv) => { this.handleTeamChange(abrv) }}
+							handleConferenceChange={ (conference) => { this.handleConferenceChange(conference) }}
 						/>
 					</div>
-					<ImageSelect {...this.props} />
+					<ImageSelect { ...this.props } />
 				</div>
 			</div>
 		);
 	}
 
 	handleUserSelect(username){
-		this.setState({activeUsername: username});
-		this.setState({userColors: this.calculateUserColors(username) });
+		this.setState({ 
+			activeUsername: username,
+			userColors: this.calculateColors(this.props.users, 'name', username)
+		});
 	}
 
-	calculateUserColors(activeUsername){
-		const alphaIncrement = .9 / this.props.users.length;
+	handleConferenceChange(conference){
+		let teams = this.props.standings.filter( team => { return team.CONFERENCE === conference })
+		let activeTeam = teams[0].ABRV;
+		this.setState({ 
+			activeConference: conference,
+			activeTeam: activeTeam,
+			teamColors: this.calculateColors(teams, 'ABRV', activeTeam)
+		});
+	}
+
+	handleTeamChange(abrv){
+		let teams = this.props.standings.filter( team => { return team.CONFERENCE === this.state.activeConference })
+		this.setState({
+			activeTeam: abrv,
+			teamColors: this.calculateColors(teams, 'ABRV', abrv)
+		})
+	}
+
+	calculateColors(things, nameProperty, activeThingName){
+		const alphaIncrement = .9 / things.length;
 		const baseColor = "rgba(62, 93, 144, ";
-		let userColors = {};
-		this.props.users.map( (user, i) => {
+		let colors = {};
+		things.map( (thing, i) => {
 			let alpha = 1 - (alphaIncrement * i);
-			userColors[user.name] = baseColor + alpha + ")";
+			colors[thing[nameProperty]] = baseColor + alpha + ")";
 			return null;
 		});
-		userColors[activeUsername] = "rgba(255, 130, 46, 1)";
-		return userColors;
+		colors[activeThingName] = "rgba(255, 130, 46, 1)";
+		return colors;
 	}
 }
 

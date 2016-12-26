@@ -1,7 +1,22 @@
 .standings-table td{
 	border-top: 1px solid rgba(45, 62, 89, 0.8);
+	width: 25%;
 }
 .standings-table thead th{
 	border-top: none;
 	border-bottom: 2px solid rgba(45, 62, 89, 0.8);
+}
+.standings-table tr:hover{
+	cursor: pointer;
+}
+.conference-select-container{
+	display: flex;
+	flex-direction: row;
+}
+.conference-select{
+	width: 50%;
+	padding: 1rem;
+}
+.conference-select:hover{
+	cursor: pointer;
 }

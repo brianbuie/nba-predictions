@@ -23,7 +23,7 @@ class Ticker extends Component {
 			return(<span className="txt-negative"><i className="fa fa-caret-down"></i> {value} </span>); 
 		}
 		if(value === 0){
-			return(<span className="txt-faded"> - </span>);
+			return;
 		}
 	}
 
