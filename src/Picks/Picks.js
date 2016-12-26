@@ -16,7 +16,9 @@ class Picks extends Component {
 		return picks.filter(pick => {
 			return pick.actual.CONFERENCE === conference;
 		}).sort((a, b) => {
-			return a.RANK < b.RANK ? 1 : -1;
+			if(a.RANK < b.RANK){ return 1; }
+			if(a.RANK > b.RANK){ return -1; }
+			return 0;
 		});
 	}
 
