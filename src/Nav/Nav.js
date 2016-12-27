@@ -10,7 +10,7 @@ class Nav extends Component {
 		return (
 			<nav>
 				<div className="nav-link-container">
-					<a className="nav-link nav-left" onClick={() => {this.props.dateChange(-1)}}>
+					<a className="nav-link nav-left" onClick={() => {this.props.handleDateChange(-1)}}>
 						<FontAwesome name="arrow-left" />
 					</a>
 				</div>
@@ -18,7 +18,7 @@ class Nav extends Component {
 					{this.title()}
 				</h4>
 				<div className="nav-link-container">
-					<a className="nav-link nav-right" onClick={() => {this.props.dateChange(1)}}>
+					<a className="nav-link nav-right" onClick={() => {this.props.handleDateChange(1)}}>
 						<FontAwesome name="arrow-right" />
 					</a>
 				</div>
