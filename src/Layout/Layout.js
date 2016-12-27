@@ -55,10 +55,10 @@ class Layout extends Component {
 						</div>
 					</div>
 					<div className="row">
-						<div className="col-md-3" id="standings-table">
+						<div className="col-sm-3" id="standings-table">
 							<StandingsTable { ...this.props } />
 						</div>
-						<div className="col-md-9" id="standings-graph" style={{ minHeight: this.state.graphSizes.standings.height }}>
+						<div className="col-sm-9" id="standings-graph" style={{ minHeight: this.state.graphSizes.standings.height }}>
 							<StandingsGraph {...this.props} {...this.state} />
 						</div>
 					</div>

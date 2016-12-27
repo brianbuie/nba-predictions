@@ -29,22 +29,24 @@ class StandingsTable extends Component {
 								return team.CONFERENCE === this.props.activeConference;
 							}).map((team, i) => {
 								let className = i > 7 ? "txt-faded" : "";
-								if(team.difference.RANK < 0){ className += " bkg-positive"; }
-								if(team.difference.RANK > 0){ className += " bkg-negative"; }
 								return (
 									<tr 
 										className={ className }
 										key={ team.ABRV }
-										style={{ borderRight: "3px solid " + this.props.teamColors[team.ABRV] }}
+										style={
+											team.ABRV === this.props.activeTeam ? 
+												{ borderRight: "4px solid " + this.props.teamColors[team.ABRV]} : 
+												{ borderRight: "4px solid transparent" }
+										}
 										onClick={ () => { this.props.handleTeamChange(team.ABRV) }}
 									>
 										<td className="txt-center">
 											<Ticker value={ team.difference.RANK } inverted={ true }/>
 										</td>
-										<td style={ this.props.activeTeam === team.ABRV ? { color: this.props.teamColors[team.ABRV] } : {} }>
+										<td>
 											{ team.ABRV }
 										</td>
-										<td  style={ this.props.activeTeam === team.ABRV ? { color: this.props.teamColors[team.ABRV] } : {} }>
+										<td>
 											{ team.W }-{ team.L }
 										</td>
 										<td className="txt-center">
