@@ -1,6 +1,7 @@
 import ImageSelect from '../ImageSelect/ImageSelect';
 import Nav from '../Nav/Nav';
 import React, { Component } from 'react';
+import StandingsGraph from '../StandingsGraph/StandingsGraph';
 import StandingsTable from '../StandingsTable/StandingsTable';
 import UserCard from '../UserCard/UserCard';
 import UserGraph from '../UserGraph/UserGraph';
@@ -10,17 +11,33 @@ import './Layout.css';
 
 class Layout extends Component {
 
+	constructor(props){
+		super(props);
+		this.state = {
+			graphSizes: {
+				user: {
+					width: 0,
+					height: 0
+				},
+				standings: {
+					width: 0,
+					height: 0
+				}
+			}
+		};
+	}
+
 	render() {
 		return (
 			<div>
 				<Nav { ...this.props }/>
 				<div className="container">
 					<div className="row">
-						<div className="col-xs-12 no-padding">
-							{ this.props.allScores ? <UserGraph { ...this.props } /> : null }
+						<div className="col-xs-12 no-padding" id="user-graph" style={{ minHeight: this.state.graphSizes.user.height }}>
+							<UserGraph { ...this.props } { ...this.state } />
 						</div>
 					</div>
-					<div className="row no-padding-bottom">
+					<div className="row no-padding-bottom" id="user-cards">
 						{ this.props.users.map( user => { 
 							return (
 								<div className="col-xs-3 no-padding" key={user.name}>
@@ -38,10 +55,11 @@ class Layout extends Component {
 						</div>
 					</div>
 					<div className="row">
-						<div className="row">
-							<div className="col-md-3">
-								<StandingsTable { ...this.props } />
-							</div>
+						<div className="col-md-3" id="standings-table">
+							<StandingsTable { ...this.props } />
+						</div>
+						<div className="col-md-9" id="standings-graph" style={{ minHeight: this.state.graphSizes.standings.height }}>
+							<StandingsGraph {...this.props} {...this.state} />
 						</div>
 					</div>
 					<div className="row">
@@ -52,6 +70,21 @@ class Layout extends Component {
 				</div>
 			</div>
 		);
+	}
+
+	componentDidMount(){
+		this.setState({
+			graphSizes: {
+				user: {
+					width: document.getElementById('user-graph').clientWidth,
+					height: document.getElementById('user-cards').clientHeight
+				},
+				standings: {
+					width: document.getElementById('standings-graph').clientWidth,
+					height: document.getElementById('standings-table').clientHeight
+				}
+			}
+		});
 	}
 }
 

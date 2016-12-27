@@ -16,7 +16,7 @@ class App extends Component {
 
 	componentWillMount(){
 		this.fetchInitialState();
-		this.fetchCompleteScoreHistory( () => { this.setState({ loading: false }) } );
+		this.fetchCompleteScoreHistory();
 		this.fetchTeamStandingsHistory("West");
 	}
 
@@ -31,7 +31,8 @@ class App extends Component {
 				userColors: this.calculateColors(this.state.users, 'name', this.state.users[0].name),
 				activeConference: "West",
 				activeTeam: activeTeam,
-				teamColors: this.calculateColors(teams, 'ABRV', activeTeam)
+				teamColors: this.calculateColors(teams, 'ABRV', activeTeam),
+				loading: false
 			});
 		});
 	}
@@ -40,7 +41,7 @@ class App extends Component {
 		return (
 			<div>
 				{ this.state.loading ? <Loading /> : null }
-				{ !this.state.loading ? 
+				{ this.state.activeUsername ? 
 					<Layout 
 						{ ...this.state } 
 						handleDateChange={ (delta) => { this.handleDateChange(delta) } }
@@ -62,10 +63,9 @@ class App extends Component {
 		});
 	}
 
-	fetchCompleteScoreHistory(callback){
+	fetchCompleteScoreHistory(){
 		Api.get( '?type=userscores&days=1000', (data) => {
 			this.setState({ allScores: data });
-			callback();
 		});
 	}
 	

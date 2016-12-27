@@ -1,14 +1,21 @@
+import Loading from '../Loading/Loading';
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
 
 class UserGraph extends Component {
 
 	render(){
+		if(!this.props.allScores){
+			return <Loading />
+		}
+		let data = this.props.allScores;
 		return (
-			<Line 
+			<Line
+				height={ this.props.graphSizes.user.height }
+				width={ this.props.graphSizes.user.width }
 				data={{
-					labels: this.props.allScores[0].data.map( entry => { return entry.date; }),
-					datasets: this.props.allScores.map( user => {
+					labels: data[0].data.map( entry => { return entry.date; }),
+					datasets: data.map( user => {
 						return {
 							borderWidth: 2,
 							borderColor: this.props.userColors[user.name],

@@ -11,7 +11,7 @@ class CustomDate{
 		// max today
 		$this->max = new DateTime();
 		// min season opener
-		$this->min = new DateTime('2016-10-01');
+		$this->min = new DateTime('2016-10-27');
 		
 		if(!$this->is_valid()){
 			// if date is less than min, set it to min, otherwise set it to max 
