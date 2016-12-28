@@ -23,22 +23,25 @@ class UserGraph extends Component {
 							data: user.data.map( entry => { return entry.score; }),
 							fill: false,
 							backgroundColor: null,
-							pointRadius: 0,
 						}
 					})
 				}} 
 				options={{
 					responsive: true,
-					hover: {
-						intersect: false,
-						mode: "x",
+					elements: {
+						point: {
+							radius: 0,
+							hoverRadius: 5,
+							hitRadius: 5
+						}
 					},
 					legend: {
 						display: false,
 					},
 					tooltips: {
-						enabled: true,
-						intersect: false
+						mode: 'x',
+						intersect: false,
+						custom: (tooltip) => { console.log(tooltip) }
 					},
 					scales: {
 						xAxes: [{
