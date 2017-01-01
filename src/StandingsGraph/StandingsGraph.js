@@ -17,14 +17,16 @@ class StandingsGraph extends Component {
 				height={ this.props.graphSizes.standings.height }
 				width={ this.props.graphSizes.standings.width }
 				data={{
-					labels: data[0].data.map( entry => { return entry.date; }),
+					labels: data[0].data.map( (entry, i) => { return i; }),
 					datasets: data.map( team => {
 						return {
-							borderWidth: 2,
+							borderWidth: team.team === this.props.activeTeam ? 4 : 2,
 							borderColor: this.props.teamColors[team.team],
 							label: team.team,
 							data: team.data.map( entry => { return entry.diff; }),
 							fill: false,
+							lineTension: 0,
+							spanGaps: false,
 							backgroundColor: null,
 							pointRadius: 0,
 						}
