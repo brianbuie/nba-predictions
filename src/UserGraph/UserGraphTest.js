@@ -7,7 +7,7 @@ class UserGraphTest extends Component {
 		let dummyData = {
 			graphSizes: {
 				user: {
-					height: 300,
+					height: 400,
 					width: 900
 				}
 			},
@@ -17,7 +17,8 @@ class UserGraphTest extends Component {
 				jacob: '#fff',
 				mat: '#fff'
 			},
-			allScores: this.allScores()
+			allScores: this.allScores(),
+			date: '2016-11-11'
 		}
 		return (
 			<div className="container">
