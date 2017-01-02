@@ -44,7 +44,7 @@ class Standings {
 			$cache_threshold = new DateTime();
 			$cache_threshold->modify('-3 days');
 			// if the date is less than the cache threshold, save the response where it should be found (Y-m-d.json)
-			if( $custom_date < $cache_threshold ){
+			if( $custom_date->date < $cache_threshold ){
 				file_put_contents($cache_location, $data);
 			}
 		}
