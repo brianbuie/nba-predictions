@@ -42,7 +42,7 @@ class Standings {
 			$data = json_encode($this->fetch_standings($custom_date), JSON_PRETTY_PRINT);
 			// set the minimum date for caching the response (3 days old) to ensure data won't change after being cached
 			$cache_threshold = new DateTime();
-			$cache_threshold->modify('-3 days');
+			$cache_threshold->modify('-1 days');
 			// if the date is less than the cache threshold, save the response where it should be found (Y-m-d.json)
 			if( $custom_date->date < $cache_threshold ){
 				file_put_contents($cache_location, $data);
