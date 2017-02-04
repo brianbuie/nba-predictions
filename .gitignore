@@ -14,5 +14,5 @@ build
 .env
 npm-debug.log
 
-# nba api
-api/data/nba/*
+# data
+api/data/*
