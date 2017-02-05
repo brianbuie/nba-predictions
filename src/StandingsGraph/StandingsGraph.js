@@ -34,6 +34,7 @@ class StandingsGraph extends Component {
 				}} 
 				options={{
 					responsive: true,
+					maintainAspectRatio: false,
 					hover: {
 						intersect: false,
 						mode: "x",

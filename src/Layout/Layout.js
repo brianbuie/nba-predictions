@@ -76,11 +76,11 @@ class Layout extends Component {
 		this.setState({
 			graphSizes: {
 				user: {
-					width: document.getElementById('user-graph').clientWidth,
+					width: document.getElementById('user-cards').clientWidth,
 					height: document.getElementById('user-cards').clientHeight
 				},
 				standings: {
-					width: document.getElementById('standings-graph').clientWidth,
+					width: document.getElementById('standings-table').clientWidth,
 					height: document.getElementById('standings-table').clientHeight
 				}
 			}
